@@ -1,21 +1,23 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Form, Button, Col, Container } from "react-bootstrap";
 import ToastMessage from "./ToastMessage";
 
 export default function Add() {
-  const [fName, setFName] = useState("");
-  const [lName, setLName] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [tailNumber, setTailNumber] = useState("");
+  const [homeBase, setHomeBase] = useState("");
   const [show, setShow] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setShow(true);
-    setFullName(`${fName} ${lName}`);
-    setFName("");
-    setLName("");
-    console.log(fullName);
+    setTailNumber("");
+    setHomeBase("");
   };
+
+  useEffect(() => {
+    console.log(tailNumber);
+    console.log(show);
+  });
 
   return (
     <Container className="p-3">
@@ -23,16 +25,16 @@ export default function Add() {
         <Form.Row>
           <Col>
             <Form.Control
-              placeholder="First name"
-              value={fName}
-              onChange={(e) => setFName(e.target.value)}
+              placeholder="Tail Number"
+              value={tailNumber}
+              onChange={(e) => setTailNumber(e.target.value)}
             />
           </Col>
           <Col>
             <Form.Control
-              placeholder="Last name"
-              value={lName}
-              onChange={(e) => setLName(e.target.value)}
+              placeholder="Home Base ICAO"
+              value={homeBase}
+              onChange={(e) => setHomeBase(e.target.value)}
             />
           </Col>
         </Form.Row>
@@ -45,7 +47,13 @@ export default function Add() {
           Submit
         </Button>
       </Form>
-      <ToastMessage message={`${fullName} has been created`} show={show} />
+      <ToastMessage
+        autohide
+        delay={5000}
+        message={`${tailNumber} has been created`}
+        show={show}
+        setShow={setShow}
+      />
     </Container>
   );
 }

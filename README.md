@@ -1,1 +1,1 @@
-A MERN stack application for to help hospitality professionals track their client's preferences
+A MERN stack application for to help corporate aviation professionals track their passenger's preferences.
