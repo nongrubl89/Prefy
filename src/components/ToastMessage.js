@@ -12,7 +12,7 @@ export default function ToastMessage(props) {
   };
 
   return (
-    <Toast show={props.show} onClose={toggleShow}>
+    <Toast show={props.show} onClose={toggleShow} delay={3000}>
       <Toast.Header>
         <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
         <strong className="mr-auto">Prefy</strong>

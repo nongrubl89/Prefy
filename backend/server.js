@@ -30,12 +30,22 @@ prefyRoutes.route("/add").post(function (req, res) {
   let tail = new Tail(req.body);
   tail
     .save()
-    .then((todo) => {
-      res.status(200).json({ tail: "success" });
+    .then((tail) => {
+      res.status(200).json({ tail });
     })
     .catch((err) => {
       res.status(400).send("adding new tail failed");
     });
+});
+
+prefyRoutes.route("/").get(function (req, res) {
+  Tail.find(function (err, tails) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(tails);
+    }
+  });
 });
 
 const connectionString = process.env.DATABASE;

@@ -1,33 +1,47 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useRef } from "react";
 import { Form, Button, Col, Container } from "react-bootstrap";
 import ToastMessage from "./ToastMessage";
+import axios from "axios";
 
 export default function Add() {
-  const [tailNumber, setTailNumber] = useState("");
-  const [homeBase, setHomeBase] = useState("");
-  const [owner, setOwner] = useState("");
+  const [tail, setTail] = useState({
+    tail_number: "",
+    tail_icao: "",
+    tail_owner: "",
+  });
   const [show, setShow] = useState(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTail((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setShow(true);
-    fetch("http://localhost:4000/tails/add", {
-      method: "POST",
-      body: JSON.stringify(tailNumber, homeBase, owner),
-    })
-      .then((result) => result.json())
-      .then((info) => {
-        console.log(info);
+
+    axios
+      .post("http://localhost:4000/tails/add", tail)
+      .then((res) => console.log(res.data))
+      .then(() => {
+        setShow(true);
+        setTail({ tail_number: "", tail_icao: "", tail_owner: "" });
+        setTimeout(setShow(false), 3000);
       });
-    setTailNumber("");
-    setHomeBase("");
-    setOwner("");
   };
 
   useEffect(() => {
-    console.log(tailNumber);
-    console.log(show);
+    console.log(tail);
   });
+
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  };
 
   return (
     <Container className="p-3">
@@ -36,22 +50,25 @@ export default function Add() {
           <Col>
             <Form.Control
               placeholder="Tail Number"
-              value={tailNumber}
-              onChange={(e) => setTailNumber(e.target.value)}
+              value={tail.tail_number}
+              onChange={handleChange}
+              name="tail_number"
             />
           </Col>
           <Col>
             <Form.Control
               placeholder="Owner"
-              value={owner}
-              onChange={(e) => setOwner(e.target.value)}
+              value={tail.tail_owner}
+              onChange={handleChange}
+              name="tail_owner"
             />
           </Col>
           <Col>
             <Form.Control
               placeholder="Home Base ICAO"
-              value={homeBase}
-              onChange={(e) => setHomeBase(e.target.value)}
+              value={tail.tail_icao}
+              onChange={handleChange}
+              name="tail_icao"
             />
           </Col>
         </Form.Row>
@@ -66,8 +83,7 @@ export default function Add() {
       </Form>
       <ToastMessage
         autohide
-        delay={5000}
-        message={`${tailNumber} has been created`}
+        message={usePrevious(tail.tail_number) + " has been created"}
         show={show}
         setShow={setShow}
       />
