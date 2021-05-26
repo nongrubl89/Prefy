@@ -2,6 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import { Form, Button, Col, Container } from "react-bootstrap";
 import ToastMessage from "./ToastMessage";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 export default function Add() {
   const [tail, setTail] = useState({
@@ -10,6 +11,7 @@ export default function Add() {
     tail_owner: "",
   });
   const [show, setShow] = useState(false);
+  const history = useHistory();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setTail((prevState) => ({
@@ -27,8 +29,8 @@ export default function Add() {
       .then(() => {
         setShow(true);
         setTail({ tail_number: "", tail_icao: "", tail_owner: "" });
-        setTimeout(setShow(false), 3000);
       });
+    history.push(`/`);
   };
 
   useEffect(() => {
