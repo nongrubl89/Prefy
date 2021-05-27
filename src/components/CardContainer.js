@@ -23,6 +23,7 @@ export default function CardContainer() {
     <Container>
       {tails.map((tail) => (
         <TailCard
+          key={tail.id}
           id={tail._id}
           tailNumber={tail.tail_number}
           icao={tail.tail_icao}

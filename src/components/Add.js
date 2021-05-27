@@ -3,6 +3,7 @@ import { Form, Button, Col, Container } from "react-bootstrap";
 import ToastMessage from "./ToastMessage";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import Navigation from "./Navigation";
 
 export default function Add() {
   const [tail, setTail] = useState({

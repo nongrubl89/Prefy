@@ -1,8 +1,6 @@
 import React from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import { Switch, Route } from "react-router";
-import Add from "./Add";
-import Home from "./Home";
+import CardContainer from "./CardContainer";
 
 export default function Navigation() {
   return (
@@ -24,14 +22,6 @@ export default function Navigation() {
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <Switch>
-        <Route exact path="/" component={Home}>
-          <Home />
-        </Route>
-        <Route path="/add" component={Add}>
-          <Add />
-        </Route>
-      </Switch>
     </>
   );
 }
