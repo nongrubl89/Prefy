@@ -1,16 +1,19 @@
 import React from "react";
 import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
-import CardContainer from "./CardContainer";
 
 export default function Navigation() {
   return (
     <>
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="/">Prefy</Navbar.Brand>
+      <Navbar className="p-3" sticky="top" expand="lg">
+        <Navbar.Brand className="text-light" href="/">
+          Prefy
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="/add">Add a pref</Nav.Link>
+            <Nav.Link className="text-light" href="/add">
+              Add a pref
+            </Nav.Link>
           </Nav>
           <Form inline>
             <FormControl
@@ -18,7 +21,7 @@ export default function Navigation() {
               placeholder="Search Prefs"
               className="mr-sm-2"
             />
-            <Button variant="outline-success">Search Prefs</Button>
+            <Button variant="primary">Search Prefs</Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>

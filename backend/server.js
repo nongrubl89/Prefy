@@ -38,13 +38,11 @@ prefyRoutes.route("/add").post(function (req, res) {
     });
 });
 
-prefyRoutes.route("/").get(function (req, res) {
-  Tail.find(function (err, tails) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(tails);
-    }
+prefyRoutes.route("/view/:id").get(function (req, res) {
+  let id = req.params.id;
+  console.log(id);
+  Tail.findById(id, function (err, tail) {
+    res.json(tail);
   });
 });
 
