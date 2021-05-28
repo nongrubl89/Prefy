@@ -13,5 +13,26 @@ let Tail = new Schema({
     type: String,
     require: true,
   },
+  tail_crew: [
+    {
+      name: String,
+      position: String,
+      preferredBreakfast: String,
+      preferredSnacks: String,
+      preferredLunch: String,
+      preferredDinner: String,
+      preferredDrinks: String,
+    },
+  ],
+  tail_standardStock: {
+    type: Array,
+    require: false,
+  },
+  tail_passengers: [
+    {
+      name: String,
+      preferences: String,
+    },
+  ],
 });
 module.exports = mongoose.model("Tail", Tail);

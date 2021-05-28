@@ -11,7 +11,7 @@ export default function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link className="text-light" href="/add">
+            <Nav.Link className="text-light p-3" href="/add">
               Add a pref
             </Nav.Link>
           </Nav>

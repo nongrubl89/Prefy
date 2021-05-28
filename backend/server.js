@@ -40,8 +40,14 @@ prefyRoutes.route("/add").post(function (req, res) {
 
 prefyRoutes.route("/view/:id").get(function (req, res) {
   let id = req.params.id;
-  console.log(id);
   Tail.findById(id, function (err, tail) {
+    res.json(tail);
+  });
+});
+
+prefyRoutes.route("/edit/:id").get(function (req, res) {
+  let id = req.params.id;
+  Tail.findByIdAndUpdate(id, function (err, tail) {
     res.json(tail);
   });
 });

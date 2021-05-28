@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useRef } from "react";
-import { Form, Button, Col, Container } from "react-bootstrap";
+import { Form, Button, Col, Container, Card, Row } from "react-bootstrap";
 import ToastMessage from "./ToastMessage";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
@@ -46,43 +46,48 @@ export default function Add() {
   };
 
   return (
-    <Container className="p-3">
-      <Form>
-        <Form.Row>
-          <Col>
-            <Form.Control
-              placeholder="Tail Number"
-              value={tail.tail_number}
-              onChange={handleChange}
-              name="tail_number"
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Owner"
-              value={tail.tail_owner}
-              onChange={handleChange}
-              name="tail_owner"
-            />
-          </Col>
-          <Col>
-            <Form.Control
-              placeholder="Home Base ICAO"
-              value={tail.tail_icao}
-              onChange={handleChange}
-              name="tail_icao"
-            />
-          </Col>
-        </Form.Row>
-        <Button
-          className="mt-3"
-          variant="primary"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </Form>
+    <Container fluid id="add-pref-container">
+      <Row className="h-100 d-flex justify-content-center align-items-start">
+        <Col md={6}>
+          <Card className="shadow-lg mt-4">
+            <Card.Header>Add new preference sheet</Card.Header>
+            <Card.Body>
+              <Form>
+                <Form.Control
+                  className="mb-3"
+                  placeholder="Tail Number"
+                  value={tail.tail_number}
+                  onChange={handleChange}
+                  name="tail_number"
+                />
+                <Form.Control
+                  className="mb-3"
+                  placeholder="Owner"
+                  value={tail.tail_owner}
+                  onChange={handleChange}
+                  name="tail_owner"
+                />
+
+                <Form.Control
+                  className="mb-1"
+                  placeholder="Home Base ICAO"
+                  value={tail.tail_icao}
+                  onChange={handleChange}
+                  name="tail_icao"
+                />
+                <Button
+                  className="mt-3"
+                  variant="primary"
+                  type="submit"
+                  onClick={handleSubmit}
+                >
+                  Submit
+                </Button>
+              </Form>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
       <ToastMessage
         autohide
         message={usePrevious(tail.tail_number) + " has been created"}

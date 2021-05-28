@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Jumbotron } from "react-bootstrap";
+import { Jumbotron } from "react-bootstrap";
 
 export default function TailHome() {
   const [error, setError] = useState(null);

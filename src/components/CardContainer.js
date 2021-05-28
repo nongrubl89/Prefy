@@ -20,7 +20,7 @@ export default function CardContainer() {
     return () => (mounted = false);
   }, []);
   return (
-    <Container>
+    <Container fluid id="card-container">
       {tails.map((tail) => (
         <TailCard
           key={tail.id}
