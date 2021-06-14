@@ -52,6 +52,12 @@ prefyRoutes.route("/edit/:id").get(function (req, res) {
   });
 });
 
+prefyRoutes.route("/:id").delete((req, res) => {
+  Tail.findOneAndDelete(req.params.delete)
+    .then((tail) => res.json(tail))
+    .catch((err) => res.status(400).json(err));
+});
+
 const connectionString = process.env.DATABASE;
 
 MongoClient.connect(connectionString, (err, client) => {

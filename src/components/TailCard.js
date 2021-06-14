@@ -23,6 +23,13 @@ export default function TailCard(props) {
                     Edit
                   </a>
                 </Button>
+                <Button
+                  className="ml-2"
+                  onClick={() => props.deletePref(props.id)}
+                  variant="primary"
+                >
+                  Delete
+                </Button>
               </Card.Body>
             </Card>
           </Col>

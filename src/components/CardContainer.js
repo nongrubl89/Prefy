@@ -4,31 +4,51 @@ import TailCard from "./TailCard";
 
 export default function CardContainer() {
   const [tails, setTails] = useState([]);
+  const [loaded, setLoaded] = useState(false);
+  const [error, setError] = useState(null);
 
-  const getTails = () => {
-    return fetch("http://localhost:4000/tails/").then((data) => data.json());
+  const deletePref = (pId) => {
+    return fetch(`http://localhost:4000/tails/${pId}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res))
+      .then(setTails(tails.filter((tail) => tail._id !== pId)));
   };
 
   useEffect(() => {
-    let mounted = true;
-    getTails().then((tails) => {
-      if (mounted) {
-        setTails(tails);
-      }
-      console.log(tails);
-    });
-    return () => (mounted = false);
+    fetch("http://localhost:4000/tails/")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          setTails(result);
+          setLoaded(true);
+        },
+        (error) => {
+          setLoaded(true);
+          setError(error);
+        }
+      );
   }, []);
-  return (
-    <Container fluid id="card-container">
-      {tails.map((tail) => (
-        <TailCard
-          key={tail.id}
-          id={tail._id}
-          tailNumber={tail.tail_number}
-          icao={tail.tail_icao}
-        ></TailCard>
-      ))}
-    </Container>
-  );
+  if (tails.length === 0) {
+    return <div>Nothing to see here</div>;
+  } else if (error) {
+    return <div>Error: {error.message}</div>;
+  } else if (!loaded) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <Container fluid id="card-container">
+        {tails.map((tail) => (
+          <TailCard
+            key={tail.id}
+            id={tail._id}
+            tailNumber={tail.tail_number}
+            icao={tail.tail_icao}
+            deletePref={() => deletePref(tail._id)}
+          ></TailCard>
+        ))}
+      </Container>
+    );
+  }
 }
