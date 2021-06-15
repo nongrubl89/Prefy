@@ -55,7 +55,13 @@ export default function CardContainer() {
   if (tails.length === 0) {
     return (
       <Container fluid id="card-container">
-        <AlertCard message="Nothing to see here, start by adding a pref" />
+        <AlertCard
+          message={
+            <p className="text-center pt-3">
+              Nothing to see here, start by <a href="/add">adding a pref</a>
+            </p>
+          }
+        />
       </Container>
     );
   } else if (!error) {
