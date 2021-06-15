@@ -23,7 +23,7 @@ export default function Add() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    axios
+    await axios
       .post("http://localhost:4000/tails/add", tail)
       .then((res) => console.log(res.data))
       .then(() => {
@@ -32,10 +32,6 @@ export default function Add() {
       });
     history.push(`/`);
   };
-
-  useEffect(() => {
-    console.log(tail);
-  });
 
   const usePrevious = (value) => {
     const ref = useRef();
