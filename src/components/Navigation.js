@@ -11,9 +11,12 @@ export default function Navigation() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link className="text-light p-3" href="/add">
-              Add a pref
-            </Nav.Link>
+            <Button variant="primary">
+              <a className="text-light" href="/add">
+                Add a pref
+                <i className="ml-2 fas fa-arrow-right"></i>
+              </a>
+            </Button>
           </Nav>
           <Form inline>
             <FormControl

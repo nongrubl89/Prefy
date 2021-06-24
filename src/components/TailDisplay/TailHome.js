@@ -1,13 +1,23 @@
 import { useState } from "react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Jumbotron } from "react-bootstrap";
+import { Jumbotron, Container, Row } from "react-bootstrap";
+import DetailCard from "../DetailCard";
+import ViewCatering from "./ViewCatering";
+import EditCatering from "./EditCatering";
+import ViewPassengers from "./ViewPassengers";
+import EditPassengers from "./EditPassengers";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 export default function TailHome() {
   const [error, setError] = useState(true);
   const [isLoaded, setIsLoaded] = useState(true);
   const [tail, setTail] = useState({});
   let { id } = useParams();
+  let { path, url } = useRouteMatch();
+
+  console.log("path", path);
+  console.log("url", url);
 
   useEffect(() => {
     const fetchTail = async () => {
@@ -35,9 +45,47 @@ export default function TailHome() {
     return <div>Loading...</div>;
   } else {
     return (
-      <Jumbotron>
-        {tail.tail_number} {tail.tail_owner}
-      </Jumbotron>
+      <>
+        <Jumbotron id="jumbotron">
+          <h2>{tail.tail_number}</h2>
+          <h6>{tail.tail_owner}</h6>
+          <h6>{tail.tail_icao}</h6>
+        </Jumbotron>
+        <Container>
+          <Row className="d-flex justify-content-center">
+            <DetailCard
+              image={<i className="fas fa-user-friends fa-2x align-middle"></i>}
+              tailDetail="Passengers"
+              text="Add passengers and preferences"
+              linkToView={`${id}/passengers`}
+              linkToEdit={`${url}/passengers-edit`}
+              viewComponent={ViewPassengers}
+              editComponent={EditPassengers}
+              viewPath={`${url}/passengers`}
+              editPath={`${url}/passengers-edit`}
+            />
+            {/* <DetailCard
+              image={<i className="fas fa-utensils fa-2x"></i>}
+              tailDetail="Catering"
+              text="Add preferred restaurants, caterers and vendors in common destinations"
+              linkToView={`${id}/catering`}
+              linkToEdit={`${url}/catering-edit`}
+            />
+            <DetailCard
+              image={<i className="fas fa-users fa-2x"></i>}
+              tailDetail="Crew"
+              text="Add crewmembers and their preferences"
+              linkToView={`${url}/crew`}
+              linkToEdit={`${url}/crew-edit`}
+            /> */}
+          </Row>
+        </Container>
+        {/* <Switch>
+          <Route exact path={`${path}/:topicId`}>
+            <ViewCatering />
+          </Route>
+        </Switch> */}
+      </>
     );
   }
 }

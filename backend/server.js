@@ -47,7 +47,7 @@ prefyRoutes.route("/view/:id").get(function (req, res) {
 
 prefyRoutes.route("/edit/:id").get(function (req, res) {
   let id = req.params.id;
-  Tail.findByIdAndUpdate(id, function (err, tail) {
+  Tail.findById(id, function (err, tail) {
     res.json(tail);
   });
 });

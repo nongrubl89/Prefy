@@ -26,8 +26,15 @@ button:hover {
   border: #0a85ed 1px solid !important;
 }
 
-.jumbotron {
-  background-color: red;
+#jumbotron {
+  background: linear-gradient(
+    45deg,
+    hsla(192, 95%, 50%, 1) 0%,
+    hsla(200, 93%, 49%, 1) 25%,
+    hsla(207, 92%, 48%, 1) 71%,
+    hsla(216, 75%, 48%, 1) 100%,
+    hsla(225, 89%, 47%, 1) 100%
+  );
 }
 
 #add-pref-container,
@@ -41,4 +48,9 @@ button:hover {
     hsla(225, 89%, 47%, 1) 100%
   );
   height: 100vh;
+}
+
+#detail-card {
+  background-color: rgb(226, 235, 247);
+  border-radius: 12px;
 }

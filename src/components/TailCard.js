@@ -18,11 +18,11 @@ export default function TailCard(props) {
                     View
                   </a>
                 </Button>
-                <Button variant="primary">
+                {/* <Button variant="primary">
                   <a className="text-white" href={`/edit/${props.id}`}>
                     Edit
                   </a>
-                </Button>
+                </Button> */}
                 <Button
                   className="ml-2"
                   onClick={() => props.deletePref(props.id)}

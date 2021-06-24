@@ -58,7 +58,7 @@ export default function CardContainer() {
         <AlertCard
           message={
             <p className="text-center pt-3">
-              Nothing to see here, start by <a href="/add">adding a pref</a>
+              Nothing to see here! Start by <a href="/add">adding a pref.</a>
             </p>
           }
         />
