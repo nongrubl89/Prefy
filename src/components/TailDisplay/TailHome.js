@@ -13,11 +13,17 @@ export default function TailHome() {
   const [error, setError] = useState(true);
   const [isLoaded, setIsLoaded] = useState(true);
   const [tail, setTail] = useState({});
+  const [showCards, setShowCards] = useState(true);
   let { id } = useParams();
   let { path, url } = useRouteMatch();
 
   console.log("path", path);
   console.log("url", url);
+
+  const showCardsSetter = () => {
+    setShowCards(!showCards);
+    console.log("click");
+  };
 
   useEffect(() => {
     const fetchTail = async () => {
@@ -51,18 +57,19 @@ export default function TailHome() {
           <h6>{tail.tail_owner}</h6>
           <h6>{tail.tail_icao}</h6>
         </Jumbotron>
-        <Container>
+        <Container className={showCards ? "d-block" : "d-none"}>
           <Row className="d-flex justify-content-center">
             <DetailCard
               image={<i className="fas fa-user-friends fa-2x align-middle"></i>}
               tailDetail="Passengers"
               text="Add passengers and preferences"
-              linkToView={`${id}/passengers`}
+              linkToView={`${url}/passengers`}
               linkToEdit={`${url}/passengers-edit`}
               viewComponent={ViewPassengers}
               editComponent={EditPassengers}
               viewPath={`${url}/passengers`}
               editPath={`${url}/passengers-edit`}
+              cardSetter={showCardsSetter}
             />
             {/* <DetailCard
               image={<i className="fas fa-utensils fa-2x"></i>}

@@ -28,21 +28,20 @@ export default function DetailCard(props) {
           </Card.Title>
           <Card.Subtitle className="m-2">{props.text}</Card.Subtitle>
           <Row className="m-2">
-            <Card.Link href={props.linkToView}>
+            <Link to={props.linkToView} onClick={props.cardSetter}>
               View
               <i className="ml-1 mt-auto fas fa-arrow-right"></i>
-            </Card.Link>
-            <Card.Link href={props.linkToEdit}>
+            </Link>
+            <Link to={props.linkToEdit}>
               Edit
               <i className="ml-1 mt-auto fas fa-arrow-right"></i>
-            </Card.Link>
+            </Link>
           </Row>
         </Card.Body>
       </Card>
-      <Switch>
-        <Route path={props.viewPath} component={props.viewComponent} />
-        <Route path={props.editPath} component={props.editComponent} />
-      </Switch>
+
+      <Route path={props.viewPath} component={props.viewComponent} />
+      <Route path={props.editPath} component={props.editComponent} />
     </>
   );
 }
