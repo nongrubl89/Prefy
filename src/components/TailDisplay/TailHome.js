@@ -57,18 +57,18 @@ export default function TailHome() {
           <h6>{tail.tail_owner}</h6>
           <h6>{tail.tail_icao}</h6>
         </Jumbotron>
-        <Container className={showCards ? "d-block" : "d-none"}>
-          <Row className="d-flex justify-content-center">
+        <Container>
+          <Row
+          // className={
+          //   showCards ? "d-block d-flex justify-content-center" : "d-none"
+          // }
+          >
             <DetailCard
               image={<i className="fas fa-user-friends fa-2x align-middle"></i>}
               tailDetail="Passengers"
               text="Add passengers and preferences"
               linkToView={`${url}/passengers`}
               linkToEdit={`${url}/passengers-edit`}
-              viewComponent={ViewPassengers}
-              editComponent={EditPassengers}
-              viewPath={`${url}/passengers`}
-              editPath={`${url}/passengers-edit`}
               cardSetter={showCardsSetter}
             />
             {/* <DetailCard
@@ -87,11 +87,14 @@ export default function TailHome() {
             /> */}
           </Row>
         </Container>
-        {/* <Switch>
-          <Route exact path={`${path}/:topicId`}>
-            <ViewCatering />
-          </Route>
-        </Switch> */}
+        <Switch>
+          <Route path="/view/:id/catering" exact component={ViewCatering} />
+          <Route path="/view/:id/passengers" component={ViewPassengers} />
+          {/* <Route path="/view/:id/crew" component={ViewCrew} /> */}
+          <Route path="/view/:id/catering-edit" component={EditCatering} />
+          <Route path="/view/:id/passengers-edit" component={EditPassengers} />
+          {/* <Route path="/view/:id/crew-edit" component={EditCrew} /> */}
+        </Switch>
       </>
     );
   }

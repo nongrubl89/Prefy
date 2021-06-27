@@ -39,9 +39,10 @@ export default function DetailCard(props) {
           </Row>
         </Card.Body>
       </Card>
-
-      <Route path={props.viewPath} component={props.viewComponent} />
-      <Route path={props.editPath} component={props.editComponent} />
+      <Switch>
+        <Route path={props.viewPath} component={props.viewComponent} />
+        <Route path={props.editPath} component={props.editComponent} />
+      </Switch>
     </>
   );
 }
