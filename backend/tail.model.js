@@ -16,6 +16,8 @@ let Tail = new Schema({
   tail_crew: [
     {
       name: String,
+      email: String,
+      phone: String,
       position: String,
       preferredBreakfast: String,
       preferredSnacks: String,

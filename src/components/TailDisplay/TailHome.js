@@ -81,12 +81,6 @@ export default function TailHome(props) {
             />
           </Row>
         </Container>
-        {/* <Route path="/view/:id/catering" component={ViewCatering} />
-        <Route path="/view/:id/passengers" component={ViewPassengers} />
-        <Route path="/view/:id/crew" component={ViewCrew} />
-        <Route path="/view/:id/catering-edit" component={EditCatering} />
-        <Route path="/view/:id/passengers-edit" component={EditPassengers} />
-        <Route path="/view/:id/crew-edit" component={EditCrew} /> */}
       </>
     );
   }
