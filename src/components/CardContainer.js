@@ -17,21 +17,6 @@ export default function CardContainer() {
       .then(setTails(tails.filter((tail) => tail._id !== pId)));
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:4000/tails/")
-  //     .then((res) => res.json())
-  //     .then(
-  //       (result) => {
-  //         setTails(result);
-  //         setLoaded(true);
-  //       },
-  //       (error) => {
-  //         setLoaded(true);
-  //         setError(error);
-  //       }
-  //     );
-  // });
-
   useEffect(() => {
     const fetchTails = async () => {
       try {

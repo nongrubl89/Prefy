@@ -17,16 +17,16 @@ function App() {
     <Router>
       <Navigation />
       <Switch>
-        <Route exact path="/" component={CardContainer} />
-        <Route path="/edit/:id" component={TailEdit} />
-        <Route path="/add" component={Add} />
-        <Route path="/view/:id" component={TailHome} />
-        {/* <Route path="/:id/catering" component={ViewCatering} />
-        <Route path="/:id/passengers" component={ViewPassengers} />
+        <Route path="/view/:id/catering" component={ViewCatering} />
+        <Route path="/view/:id/passengers" component={ViewPassengers} />
         <Route path="/view/:id/crew" component={ViewCrew} />
         <Route path="/view/:id/catering-edit" component={EditCatering} />
         <Route path="/view/:id/passengers-edit" component={EditPassengers} />
-        <Route path="/view/:id/crew-edit" component={EditCrew} /> */}
+        <Route path="/view/:id/crew-edit" component={EditCrew} />
+        <Route path="/edit/:id" component={TailEdit} />
+        <Route path="/add" component={Add} />
+        <Route path="/view/:id" component={TailHome} />
+        <Route path="/" component={CardContainer} />
       </Switch>
     </Router>
   );

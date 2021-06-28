@@ -3,13 +3,9 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Jumbotron, Container, Row } from "react-bootstrap";
 import DetailCard from "../DetailCard";
-import ViewCatering from "./ViewCatering";
-import EditCatering from "./EditCatering";
-import ViewPassengers from "./ViewPassengers";
-import EditPassengers from "./EditPassengers";
-import { Switch, Route, useRouteMatch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
-export default function TailHome() {
+export default function TailHome(props) {
   const [error, setError] = useState(true);
   const [isLoaded, setIsLoaded] = useState(true);
   const [tail, setTail] = useState({});
@@ -17,8 +13,10 @@ export default function TailHome() {
   let { id } = useParams();
   let { path, url } = useRouteMatch();
 
-  console.log("path", path);
-  console.log("url", url);
+  // console.log(pathParameter);
+
+  // console.log("path", path);
+  // console.log("url", url);
 
   const showCardsSetter = () => {
     setShowCards(!showCards);
@@ -58,11 +56,7 @@ export default function TailHome() {
           <h6>{tail.tail_icao}</h6>
         </Jumbotron>
         <Container>
-          <Row
-          // className={
-          //   showCards ? "d-block d-flex justify-content-center" : "d-none"
-          // }
-          >
+          <Row className="d-block d-flex justify-content-center">
             <DetailCard
               image={<i className="fas fa-user-friends fa-2x align-middle"></i>}
               tailDetail="Passengers"
@@ -71,7 +65,7 @@ export default function TailHome() {
               linkToEdit={`${url}/passengers-edit`}
               cardSetter={showCardsSetter}
             />
-            {/* <DetailCard
+            <DetailCard
               image={<i className="fas fa-utensils fa-2x"></i>}
               tailDetail="Catering"
               text="Add preferred restaurants, caterers and vendors in common destinations"
@@ -84,17 +78,15 @@ export default function TailHome() {
               text="Add crewmembers and their preferences"
               linkToView={`${url}/crew`}
               linkToEdit={`${url}/crew-edit`}
-            /> */}
+            />
           </Row>
         </Container>
-        <Switch>
-          <Route path="/view/:id/catering" exact component={ViewCatering} />
-          <Route path="/view/:id/passengers" component={ViewPassengers} />
-          {/* <Route path="/view/:id/crew" component={ViewCrew} /> */}
-          <Route path="/view/:id/catering-edit" component={EditCatering} />
-          <Route path="/view/:id/passengers-edit" component={EditPassengers} />
-          {/* <Route path="/view/:id/crew-edit" component={EditCrew} /> */}
-        </Switch>
+        {/* <Route path="/view/:id/catering" component={ViewCatering} />
+        <Route path="/view/:id/passengers" component={ViewPassengers} />
+        <Route path="/view/:id/crew" component={ViewCrew} />
+        <Route path="/view/:id/catering-edit" component={EditCatering} />
+        <Route path="/view/:id/passengers-edit" component={EditPassengers} />
+        <Route path="/view/:id/crew-edit" component={EditCrew} /> */}
       </>
     );
   }

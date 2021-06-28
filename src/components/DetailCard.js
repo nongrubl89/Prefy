@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 import { Card, Row } from "react-bootstrap";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 export default function DetailCard(props) {
   const [hover, setHover] = useState(false);
@@ -39,10 +33,6 @@ export default function DetailCard(props) {
           </Row>
         </Card.Body>
       </Card>
-      <Switch>
-        <Route path={props.viewPath} component={props.viewComponent} />
-        <Route path={props.editPath} component={props.editComponent} />
-      </Switch>
     </>
   );
 }
