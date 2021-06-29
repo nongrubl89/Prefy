@@ -33,6 +33,33 @@ export default function EditCrew() {
     }));
   };
 
+  const categories = [
+    {
+      item: "name",
+      placeholder: "Name",
+      value: crew.name,
+    },
+    { item: "email", placeholder: "Email", value: crew.email },
+
+    { item: "phone", placeholder: "Phone", value: crew.phone },
+    { item: "position", placeholder: "Position", value: crew.position },
+    {
+      item: "preferredBreakfast",
+      placeholder: "Preferred Breakfast",
+      value: crew.preferredBreakfast,
+    },
+    {
+      item: "preferredLunch",
+      placeholder: "Preferred Lunch",
+      value: crew.preferredLunch,
+    },
+    {
+      item: "preferredDinner",
+      placeholder: "Preferred Dinner",
+      value: crew.preferredDinner,
+    },
+  ];
+
   return (
     <Container fluid className="bg-light">
       <Row className="d-flex justify-content-center p-3">
@@ -45,77 +72,18 @@ export default function EditCrew() {
               </Accordion.Toggle>
               <Accordion.Collapse eventKey="0">
                 <Form className="p-3">
-                  <Form.Group controlId="crewName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="Name"
-                      value={crew.name}
-                      onChange={handleChange}
-                      name="name"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control
-                      type="email"
-                      placeholder="Enter email"
-                      value={crew.email}
-                      onChange={handleChange}
-                      name="email"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="crewPhone">
-                    <Form.Label>Phone Number</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="(XXX) XXX-XXXX"
-                      value={crew.phone}
-                      onChange={handleChange}
-                      name="phone"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="jobTitle">
-                    <Form.Label>Job Title</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="ex: PIC, SIC, Cabin Attendant"
-                      value={crew.position}
-                      onChange={handleChange}
-                      name="position"
-                    />
-                  </Form.Group>
-                  <h5>Food and Drink Preferences</h5>
-                  <Form.Group controlId="breakfast">
-                    <Form.Label>Preferred Breakfast</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="ex: Scrambled Eggs and Bacon"
-                      value={crew.preferredBreakfast}
-                      onChange={handleChange}
-                      name="preferredBreakfast"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="lunch">
-                    <Form.Label>Preferred Lunch</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="ex: Club Sandwich with Jalapeno Kettle Chips"
-                      value={crew.preferredLunch}
-                      onChange={handleChange}
-                      name="preferredLunch"
-                    />
-                  </Form.Group>
-                  <Form.Group controlId="dinner">
-                    <Form.Label>Preferred Dinner</Form.Label>
-                    <Form.Control
-                      type="text"
-                      placeholder="ex: Spaghetti Bolognese"
-                      value={crew.preferredDinner}
-                      onChange={handleChange}
-                      name="preferredDinner"
-                    />
-                  </Form.Group>
+                  {categories.map((category) => (
+                    <Form.Group key={category.placeholder}>
+                      <Form.Label>{category.placeholder}</Form.Label>
+                      <Form.Control
+                        type="text"
+                        placeholder={category.placeholder}
+                        value={category.value}
+                        onChange={handleChange}
+                        name={category.item}
+                      />
+                    </Form.Group>
+                  ))}
                   <Form.Group>
                     <Form.File
                       id="exampleFormControlFile1"
