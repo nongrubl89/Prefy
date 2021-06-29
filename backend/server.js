@@ -52,7 +52,25 @@ prefyRoutes.route("/edit/:id").get(function (req, res) {
   });
 });
 
+prefyRoutes.route("/view/:id/crew-edit").post(function (req, res) {
+  let crewmember = req.body;
+  console.log(crewmember);
+  console.log(req.params.id);
+  Tail.findOneAndUpdate(
+    { _id: req.params.id },
+    { $push: { tail_crew: crewmember } },
+    function (error, success) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(success);
+      }
+    }
+  );
+});
+
 prefyRoutes.route("/:id").delete((req, res) => {
+  console.log(req.params);
   Tail.findOneAndDelete(req.params.delete)
     .then((tail) => res.json(tail))
     .catch((err) => res.status(400).json(err));

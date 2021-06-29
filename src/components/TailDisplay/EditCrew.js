@@ -8,8 +8,12 @@ import {
   Container,
   Form,
 } from "react-bootstrap";
+import axios from "axios";
+import { useHistory, useParams } from "react-router-dom";
 
 export default function EditCrew() {
+  let { id } = useParams();
+  const history = useHistory();
   const [crew, setCrew] = useState({
     name: "",
     email: "",
@@ -20,9 +24,28 @@ export default function EditCrew() {
     preferredDinner: "",
   });
 
-  useEffect(() => {
-    console.log(crew);
-  });
+  // useEffect(() => {
+  //   console.log(crew);
+  // });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(`http://localhost:4000/tails/view/${id}/crew-edit`, crew)
+      // .then((res) => console.log(res.data))
+      .then(() => {
+        setCrew({
+          name: "",
+          email: "",
+          phone: "",
+          position: "",
+          preferredBreakfast: "",
+          preferredLunch: "",
+          preferredDinner: "",
+        });
+      });
+    history.push(`/view/${id}/crew-edit`);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -61,11 +84,11 @@ export default function EditCrew() {
   ];
 
   return (
-    <Container fluid className="bg-light">
+    <Container fluid className="bg-light min-vh-100">
       <Row className="d-flex justify-content-center p-3">
         <Col md={6}>
           <Accordion>
-            <Card>
+            <Card className="shadow-lg">
               <Accordion.Toggle id="jumbotron" as={Card.Header} eventKey="0">
                 Add Crewmember
                 <i className="fas fa-plus ml-2"></i>
@@ -90,7 +113,11 @@ export default function EditCrew() {
                       label="Profile Picture"
                     />
                   </Form.Group>
-                  <Button variant="primary" type="submit">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    onSubmit={handleSubmit}
+                  >
                     Submit
                   </Button>
                 </Form>
