@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 mongoose.connect("mongodb://127.0.0.1:27017/tails", { useNewUrlParser: true });
 const connection = mongoose.connection;
 connection.once("open", function () {
-  console.log("MongoDB database connection established successfully");
+  console.log("Mongooose database connection established successfully");
 });
 
 prefyRoutes.route("/").get(function (req, res) {
@@ -52,34 +52,42 @@ prefyRoutes.route("/edit/:id").get(function (req, res) {
   });
 });
 
-prefyRoutes.route("/view/:id/crew-edit").post(function (req, res) {
-  let crewmember = req.body;
-  console.log(crewmember);
-  console.log(req.params.id);
-  Tail.findOneAndUpdate(
+prefyRoutes.route("/view/:id/crew-edit").put(function (req, res, next) {
+  console.log("id", req.params.id);
+  Tail.findByIdAndUpdate(
     { _id: req.params.id },
-    { $push: { tail_crew: crewmember } },
-    function (error, success) {
+    { $addToSet: { tail_crew: req.body } },
+    (error, success) => {
       if (error) {
-        console.log(error);
+        // console.log(error);
+        return next(error);
       } else {
-        console.log(success);
+        res.json(success);
+        console.log("success");
       }
     }
   );
 });
+
+// router.route('/update-student/:id').put((req, res, next) => {
+//   studentSchema.findByIdAndUpdate(req.params.id, {
+//     $set: req.body
+//   }, (error, data) => {
+//     if (error) {
+//       return next(error);
+//       console.log(error)
+//     } else {
+//       res.json(data)
+//       console.log('Student updated successfully !')
+//     }
+//   })
+// })
 
 prefyRoutes.route("/:id").delete((req, res) => {
   console.log(req.params);
   Tail.findOneAndDelete(req.params.delete)
     .then((tail) => res.json(tail))
     .catch((err) => res.status(400).json(err));
-});
-
-const connectionString = process.env.DATABASE;
-
-MongoClient.connect(connectionString, (err, client) => {
-  err ? console.log(err) : console.log("connected to db");
 });
 
 app.use("/tails", prefyRoutes);

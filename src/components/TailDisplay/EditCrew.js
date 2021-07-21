@@ -8,8 +8,8 @@ import {
   Container,
   Form,
 } from "react-bootstrap";
-import axios from "axios";
 import { useHistory, useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function EditCrew() {
   let { id } = useParams();
@@ -23,17 +23,17 @@ export default function EditCrew() {
     preferredLunch: "",
     preferredDinner: "",
   });
+  const [open, setOpen] = useState(false);
 
   // useEffect(() => {
   //   console.log(crew);
   // });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await axios
-      .post(`http://localhost:4000/tails/view/${id}/crew-edit`, crew)
-      // .then((res) => console.log(res.data))
-      .then(() => {
+    axios
+      .put(`http://localhost:4000/tails/view/${id}/crew-edit`, crew)
+      .then(() =>
         setCrew({
           name: "",
           email: "",
@@ -42,14 +42,19 @@ export default function EditCrew() {
           preferredBreakfast: "",
           preferredLunch: "",
           preferredDinner: "",
-        });
+        })
+      )
+      .then((res) => {
+        console.log(res);
+        console.log("Crew member successfully updated");
+      })
+      .catch((error) => {
+        console.log(error);
       });
-    history.push(`/view/${id}/crew-edit`);
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name);
     setCrew((prevState) => ({
       ...prevState,
       [name]: value,
@@ -89,11 +94,19 @@ export default function EditCrew() {
         <Col md={6}>
           <Accordion>
             <Card className="shadow-lg">
-              <Accordion.Toggle id="jumbotron" as={Card.Header} eventKey="0">
+              <Accordion.Toggle
+                onClick={() => setOpen(!open)}
+                id="jumbotron"
+                as={Card.Header}
+                // eventKey="0"
+              >
                 Add Crewmember
                 <i className="fas fa-plus ml-2"></i>
               </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
+              <Accordion.Collapse
+                className={open ? "collapse show" : "collapse"}
+                eventKey="0"
+              >
                 <Form className="p-3">
                   {categories.map((category) => (
                     <Form.Group key={category.placeholder}>
@@ -116,7 +129,7 @@ export default function EditCrew() {
                   <Button
                     variant="primary"
                     type="submit"
-                    onSubmit={handleSubmit}
+                    onClick={handleSubmit}
                   >
                     Submit
                   </Button>
