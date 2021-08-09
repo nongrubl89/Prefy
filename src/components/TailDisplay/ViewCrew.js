@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ViewCrew() {
-  const [crew, setCrew] = useState({});
+  const [crew, setCrew] = useState([]);
   const [loaded, setIsLoaded] = useState(false);
   const [error, setError] = useState(true);
 
   let { id } = useParams();
 
   useEffect(() => {
-    const fetchCrews = async () => {
+    const fetchTail = async () => {
       try {
         const response = await fetch(`http://localhost:4000/tails/view/${id}`);
 
@@ -25,8 +25,8 @@ export default function ViewCrew() {
       }
     };
 
-    fetchCrews();
-  }, [loaded, crew, id]);
+    fetchTail();
+  });
 
   if (!error) {
     return <div>{error.message}</div>;

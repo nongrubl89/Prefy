@@ -84,25 +84,17 @@ prefyRoutes.get("/edit/:id", function (req, res) {
   });
 });
 
-// prefyRoutes.put("/view/:id/crew-edit", function (req, res) {
-//   upload(req, res, function (err) {
-//     console.log(req.file.path);
-//     if (err instanceof multer.MulterError) {
-//       return res.status(500).json(err);
-//     } else if (err) {
-//       return res.status(500).json(err);
-//     }
-//     return res.status(200).send(req.file);
-//   });
-// });
-
 prefyRoutes.put(
   "/view/:id/crew-edit",
   upload.single("image"),
   (req, res, next) => {
+    console.log(req.body);
+    req.body.image = [];
+    req.body.image.push(req.file);
+    console.log(req.body.image);
     Tail.findByIdAndUpdate(
       { _id: req.params.id },
-      { $addToSet: { tail_crew: req.file } },
+      { $addToSet: { tail_crew: req.body } },
       (error, success) => {
         if (error) {
           // console.log(error);
