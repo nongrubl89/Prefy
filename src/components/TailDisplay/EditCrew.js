@@ -22,17 +22,29 @@ export default function EditCrew() {
     preferredBreakfast: "",
     preferredLunch: "",
     preferredDinner: "",
+    testItem: "",
   });
   const [open, setOpen] = useState(false);
+  const [image, setImage] = useState(null);
 
   // useEffect(() => {
   //   console.log(crew);
   // });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    axios
-      .put(`http://localhost:4000/tails/view/${id}/crew-edit`, crew)
+    console.log(image);
+    const formData = new FormData();
+    for (var key in crew) {
+      formData.append(key, crew[key]);
+    }
+    formData.append("image", image);
+    await axios({
+      method: "put",
+      url: `http://localhost:4000/tails/view/${id}/crew-edit`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    })
       .then(() =>
         setCrew({
           name: "",
@@ -42,8 +54,10 @@ export default function EditCrew() {
           preferredBreakfast: "",
           preferredLunch: "",
           preferredDinner: "",
+          testItem: "",
         })
       )
+      .then(() => setOpen(false))
       .then((res) => {
         console.log(res);
         console.log("Crew member successfully updated");
@@ -86,6 +100,11 @@ export default function EditCrew() {
       placeholder: "Preferred Dinner",
       value: crew.preferredDinner,
     },
+    {
+      item: "testItem",
+      placeholder: "Test Item",
+      value: crew.testItem,
+    },
   ];
 
   return (
@@ -107,7 +126,11 @@ export default function EditCrew() {
                 className={open ? "collapse show" : "collapse"}
                 eventKey="0"
               >
-                <Form className="p-3">
+                <Form
+                  className="p-3"
+                  encType="multipart/form-data"
+                  onSubmit={handleSubmit}
+                >
                   {categories.map((category) => (
                     <Form.Group key={category.placeholder}>
                       <Form.Label>{category.placeholder}</Form.Label>
@@ -123,14 +146,16 @@ export default function EditCrew() {
                   <Form.Group>
                     <Form.File
                       id="exampleFormControlFile1"
+                      type="file"
                       label="Profile Picture"
+                      accept=".jpg,.png"
+                      name="image"
+                      onChange={(e) => {
+                        setImage(e.target.files[0]);
+                      }}
                     />
                   </Form.Group>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    onClick={handleSubmit}
-                  >
+                  <Button variant="primary" type="submit">
                     Submit
                   </Button>
                 </Form>

@@ -18,11 +18,6 @@ export default function TailHome(props) {
   // console.log("path", path);
   // console.log("url", url);
 
-  const showCardsSetter = () => {
-    setShowCards(!showCards);
-    console.log("click");
-  };
-
   useEffect(() => {
     const fetchTail = async () => {
       try {
@@ -63,7 +58,6 @@ export default function TailHome(props) {
               text="Add passengers and preferences"
               linkToView={`${url}/passengers`}
               linkToEdit={`${url}/passengers-edit`}
-              cardSetter={showCardsSetter}
             />
             <DetailCard
               image={<i className="fas fa-utensils fa-2x"></i>}

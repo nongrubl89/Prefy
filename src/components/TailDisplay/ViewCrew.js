@@ -26,7 +26,7 @@ export default function ViewCrew() {
     };
 
     fetchCrews();
-  }, [setIsLoaded, crew]);
+  }, [loaded, crew, id]);
 
   if (!error) {
     return <div>{error.message}</div>;
