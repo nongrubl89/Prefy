@@ -9,14 +9,8 @@ export default function TailHome(props) {
   const [error, setError] = useState(true);
   const [isLoaded, setIsLoaded] = useState(true);
   const [tail, setTail] = useState({});
-  const [showCards, setShowCards] = useState(true);
   let { id } = useParams();
-  let { path, url } = useRouteMatch();
-
-  // console.log(pathParameter);
-
-  // console.log("path", path);
-  // console.log("url", url);
+  let { url } = useRouteMatch();
 
   useEffect(() => {
     const fetchTail = async () => {

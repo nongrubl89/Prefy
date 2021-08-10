@@ -3,19 +3,31 @@ import { useParams } from "react-router-dom";
 
 export default function ViewCrew() {
   const [crew, setCrew] = useState([]);
-  const [loaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [error, setError] = useState(true);
 
   let { id } = useParams();
+
+  const CrewCard = () =>
+    crew.map((c) => {
+      return (
+        <ul>
+          <li>{c.name}</li>
+          <li>{c.email}</li>
+          <li>{c.phone}</li>
+        </ul>
+      );
+    });
 
   useEffect(() => {
     const fetchTail = async () => {
       try {
         const response = await fetch(`http://localhost:4000/tails/view/${id}`);
 
-        if (loaded) {
+        if (isLoaded) {
           const data = await response.json();
-          setCrew(data);
+          console.log(data.tail_crew);
+          setCrew(data.tail_crew);
           console.log(crew);
         }
 
@@ -26,13 +38,17 @@ export default function ViewCrew() {
     };
 
     fetchTail();
-  });
+  }, [crew, isLoaded, id]);
 
   if (!error) {
     return <div>{error.message}</div>;
-  } else if (!setIsLoaded && !error) {
+  } else if (!isLoaded && !error) {
     return <div>Loading...</div>;
   } else {
-    return <div>Hello</div>;
+    return (
+      <>
+        <CrewCard></CrewCard>
+      </>
+    );
   }
 }
