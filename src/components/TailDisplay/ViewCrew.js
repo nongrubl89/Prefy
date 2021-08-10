@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import {Container, Card, Row, Col} from 'react-bootstrap'
 
 export default function ViewCrew() {
   const [crew, setCrew] = useState([]);
@@ -11,12 +12,17 @@ export default function ViewCrew() {
   const CrewCard = () =>
     crew.map((c) => {
       return (
-        <ul>
-          <li>{c.name}</li>
-          <li>{c.email}</li>
-          <li>{c.phone}</li>
-        </ul>
-      );
+        <Card style={{ width: '18rem' }}>
+  <Card.Img variant="top" src="holder.js/100px180" />
+  <Card.Body>
+    <Card.Title>{c.name}</Card.Title>
+    <Card.Text>
+      Some quick example text to build on the card title and make up the bulk of
+      the card's content.
+    </Card.Text>
+    <Button variant="primary">Go somewhere</Button>
+  </Card.Body>
+</Card>
     });
 
   useEffect(() => {
@@ -47,7 +53,7 @@ export default function ViewCrew() {
   } else {
     return (
       <>
-        <CrewCard></CrewCard>
+        <CrewCard />
       </>
     );
   }
