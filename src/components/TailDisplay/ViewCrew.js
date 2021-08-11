@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {Container, Card, Row, Col} from 'react-bootstrap'
+import { Container, Card, Row, Col } from "react-bootstrap";
 
 export default function ViewCrew() {
   const [crew, setCrew] = useState([]);
@@ -10,19 +10,19 @@ export default function ViewCrew() {
   let { id } = useParams();
 
   const CrewCard = () =>
-    crew.map((c) => {
+    crew.map((c, index) => {
       return (
-        <Card style={{ width: '18rem' }}>
-  <Card.Img variant="top" src="holder.js/100px180" />
-  <Card.Body>
-    <Card.Title>{c.name}</Card.Title>
-    <Card.Text>
-      Some quick example text to build on the card title and make up the bulk of
-      the card's content.
-    </Card.Text>
-    <Button variant="primary">Go somewhere</Button>
-  </Card.Body>
-</Card>
+        <Card style={{ width: "18rem" }} key={index}>
+          <Card.Img
+            variant="top"
+            src={`http://localhost:4000/public/uploads/${c.image[0].filename}`}
+          />
+          <Card.Body>
+            <Card.Title>{c.name}</Card.Title>
+            {/* <Button variant="primary">Go somewhere</Button> */}
+          </Card.Body>
+        </Card>
+      );
     });
 
   useEffect(() => {
@@ -32,7 +32,6 @@ export default function ViewCrew() {
 
         if (isLoaded) {
           const data = await response.json();
-          console.log(data.tail_crew);
           setCrew(data.tail_crew);
           console.log(crew);
         }
@@ -40,6 +39,7 @@ export default function ViewCrew() {
         setIsLoaded(false);
       } catch {
         setError(false);
+        console.log(error);
       }
     };
 
@@ -47,7 +47,7 @@ export default function ViewCrew() {
   }, [crew, isLoaded, id]);
 
   if (!error) {
-    return <div>{error.message}</div>;
+    return <div>Error</div>;
   } else if (!isLoaded && !error) {
     return <div>Loading...</div>;
   } else {

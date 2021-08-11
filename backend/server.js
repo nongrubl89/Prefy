@@ -9,13 +9,15 @@ const PORT = 4000;
 let Tail = require("./tail.model");
 const MongoClient = require("mongodb").MongoClient;
 const path = require("path");
+const sharp = require("sharp");
 const connectionString =
   "mongodb+srv://lisab:lisa@prefy1.jztot.mongodb.net/test";
 
 app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use("./uploads", express.static("uploads"));
+app.use("/public", express.static("public"));
+app.use("/public/uploads", express.static(__dirname + "/public/uploads/"));
 
 //connect to mongoose
 mongoose.connect("mongodb://127.0.0.1:27017/tails", { useNewUrlParser: true });
@@ -30,21 +32,39 @@ MongoClient.connect(connectionString, (err, client) => {
   console.log("Connected to Database");
 });
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "public");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+// const storage = multer.memoryStorage({
+//   destination: function (req, file, cb) {
+//     cb(null, "./public/uploads");
+//   },
+//   filename: function (req, file, cb) {
+//     cb(null, Date.now() + "-" + file.originalname);
+//   },
+// });
 
-// const upload = multer({ storage: storage }).single("image");
+// const storage = multer.memoryStorage();
+
+// // const upload = multer({ storage: storage }).single("image");
+
+// const upload = multer({
+//   storage: storage,
+//   limits: {
+//     fileSize: 3024 * 3024 * 5,
+//   },
+// });
 
 const upload = multer({
-  storage: storage,
+  //multer configuration
+  //dest: "avatars",       //so that buffer is available in route handler
   limits: {
-    fileSize: 3024 * 3024 * 5,
+    fileSize: 2000000,
+  },
+  fileFilter(req, file, cb) {
+    // object method shorthand syntax
+    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+      //.match for using regex b/w (//)
+      return cb(new Error("Please upload a IMAGE"));
+    }
+    cb(undefined, true);
   },
 });
 
@@ -87,8 +107,16 @@ prefyRoutes.get("/edit/:id", function (req, res) {
 prefyRoutes.put(
   "/view/:id/crew-edit",
   upload.single("image"),
-  (req, res, next) => {
+  async (req, res, next) => {
     console.log(req.body);
+    const buffer = await sharp(req.file.buffer)
+      .png()
+      .resize({
+        width: 300,
+        height: 300,
+      })
+      .toBuffer();
+    console.log(buffer);
     req.body.image = [];
     req.body.image.push(req.file);
     console.log(req.body.image);

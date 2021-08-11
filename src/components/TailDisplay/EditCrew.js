@@ -27,10 +27,6 @@ export default function EditCrew() {
   const [open, setOpen] = useState(false);
   const [image, setImage] = useState(null);
 
-  // useEffect(() => {
-  //   console.log(crew);
-  // });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(image);
