@@ -52,22 +52,36 @@ MongoClient.connect(connectionString, (err, client) => {
 //   },
 // });
 
-const upload = multer({
-  //multer configuration
-  //dest: "avatars",       //so that buffer is available in route handler
-  limits: {
-    fileSize: 2000000,
+// const upload = multer({
+//   //multer configuration
+//   //dest: "avatars",       //so that buffer is available in route handler
+//   limits: {
+//     fileSize: 2000000,
+//   },
+//   fileFilter(req, file, cb) {
+//     // object method shorthand syntax
+//     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+//       //.match for using regex b/w (//)
+//       return cb(new Error("Please upload a IMAGE"));
+//     }
+//     cb(undefined, true);
+//   },
+// });
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/uploads");
   },
-  fileFilter(req, file, cb) {
-    // object method shorthand syntax
-    if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-      //.match for using regex b/w (//)
-      return cb(new Error("Please upload a IMAGE"));
-    }
-    cb(undefined, true);
+
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
   },
 });
 
+var upload = multer({ storage: storage });
 prefyRoutes.route("/").get(function (req, res) {
   Tail.find(function (err, tails) {
     if (err) {
@@ -108,17 +122,17 @@ prefyRoutes.put(
   "/view/:id/crew-edit",
   upload.single("image"),
   async (req, res, next) => {
-    console.log(req.body);
-    const buffer = await sharp(req.file.buffer)
-      .png()
-      .resize({
-        width: 300,
-        height: 300,
-      })
-      .toBuffer();
-    console.log(buffer);
+    const { filename: image } = req.file;
+    const profileImage = await sharp(req.file.path)
+      .resize(75, 75)
+      .jpeg({ quality: 90 })
+      .toFile(path.resolve(req.file.destination, "resized", image))
+      .catch((error) => {
+        console.log(error);
+      });
+
     req.body.image = [];
-    req.body.image.push(req.file);
+    req.body.image.push(profileImage);
     console.log(req.body.image);
     Tail.findByIdAndUpdate(
       { _id: req.params.id },

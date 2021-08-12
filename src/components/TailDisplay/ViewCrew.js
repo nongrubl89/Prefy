@@ -15,7 +15,7 @@ export default function ViewCrew() {
         <Card style={{ width: "18rem" }} key={index}>
           <Card.Img
             variant="top"
-            src={`http://localhost:4000/public/uploads/${c.image[0].filename}`}
+            src={`http://localhost:4000/public/uploads/resized/${c.image[0].filename}`}
           />
           <Card.Body>
             <Card.Title>{c.name}</Card.Title>
