@@ -58,6 +58,7 @@ export default function EditCrew() {
         console.log(res);
         console.log("Crew member successfully updated");
       })
+      .then(() => history.push(`/`))
       .catch((error) => {
         console.log(error);
       });
@@ -71,6 +72,12 @@ export default function EditCrew() {
     }));
   };
 
+  const handlePosition = (e) => {
+    setCrew((prevState) => ({
+      ...prevState,
+      position: e.target.value,
+    }));
+  };
   const categories = [
     {
       item: "name",
@@ -80,7 +87,7 @@ export default function EditCrew() {
     { item: "email", placeholder: "Email", value: crew.email },
 
     { item: "phone", placeholder: "Phone", value: crew.phone },
-    { item: "position", placeholder: "Position", value: crew.position },
+    // { item: "position", placeholder: "Position", value: crew.position },
     {
       item: "preferredBreakfast",
       placeholder: "Preferred Breakfast",
@@ -95,11 +102,6 @@ export default function EditCrew() {
       item: "preferredDinner",
       placeholder: "Preferred Dinner",
       value: crew.preferredDinner,
-    },
-    {
-      item: "testItem",
-      placeholder: "Test Item",
-      value: crew.testItem,
     },
   ];
 
@@ -139,6 +141,21 @@ export default function EditCrew() {
                       />
                     </Form.Group>
                   ))}
+                  <Form.Label>Position</Form.Label>
+                  <Form.Control
+                    as="select"
+                    custom
+                    value={crew.position}
+                    onChange={handlePosition}
+                  >
+                    <option value="not selected">--</option>
+                    <option value="Pilot-ACM">Pilot -- Aircraft Manager</option>
+                    <option value="Pilot-Captain">Pilot -- Captain</option>
+                    <option value="Pilot-First Officer">
+                      Pilot -- First Officer
+                    </option>
+                    <option value="Cabin Attendant">Cabin Attendant</option>
+                  </Form.Control>
                   <Form.Group>
                     <Form.File
                       id="exampleFormControlFile1"
@@ -151,6 +168,7 @@ export default function EditCrew() {
                       }}
                     />
                   </Form.Group>
+
                   <Button variant="primary" type="submit">
                     Submit
                   </Button>

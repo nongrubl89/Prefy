@@ -54,3 +54,9 @@ button:hover {
   background-color: rgb(226, 235, 247);
   border-radius: 12px;
 }
+
+.card-img,
+.card-img-bottom,
+.card-img-top {
+  width: 30% !important;
+}

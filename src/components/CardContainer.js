@@ -72,7 +72,7 @@ export default function CardContainer() {
       <Container fluid id="card-container">
         {tails.map((tail) => (
           <TailCard
-            keys={tail._id}
+            key={tail._id}
             id={tail._id}
             tailNumber={tail.tail_number}
             icao={tail.tail_icao}

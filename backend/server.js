@@ -123,8 +123,8 @@ prefyRoutes.put(
   upload.single("image"),
   async (req, res, next) => {
     const { filename: image } = req.file;
-    const profileImage = await sharp(req.file.path)
-      .resize(75, 75)
+    await sharp(req.file.path)
+      .resize(200, 200)
       .jpeg({ quality: 90 })
       .toFile(path.resolve(req.file.destination, "resized", image))
       .catch((error) => {
@@ -132,7 +132,7 @@ prefyRoutes.put(
       });
 
     req.body.image = [];
-    req.body.image.push(profileImage);
+    req.body.image.push(req.file);
     console.log(req.body.image);
     Tail.findByIdAndUpdate(
       { _id: req.params.id },
