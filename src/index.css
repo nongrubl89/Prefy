@@ -60,3 +60,11 @@ button:hover {
 .card-img-top {
   width: 30% !important;
 }
+
+.button-in-card,
+.button-in-card:hover {
+  background: none !important;
+  border: none !important;
+  color: black !important;
+  padding: 1px !important;
+}
