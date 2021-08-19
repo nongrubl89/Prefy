@@ -7,7 +7,7 @@ import {
   Col,
   Button,
   OverlayTrigger,
-  Popover,
+  Tooltip,
 } from "react-bootstrap";
 import ToastMessage from "../ToastMessage";
 
@@ -16,8 +16,9 @@ export default function ViewCrew() {
   const [isLoaded, setIsLoaded] = useState(true);
   const [error, setError] = useState(true);
   const [show, setShow] = useState(false);
+  const [tailNumber, setTailNumber] = useState(null);
   // const [phoneShow, setPhoneShow] = useState(false);
-  // const [phoneNumber, setPhoneNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   // const target = useRef(null);
 
   let { id } = useParams();
@@ -26,30 +27,30 @@ export default function ViewCrew() {
     setShow(false);
   };
 
-  // const showOverlay = (text) => {
-  //   // setPhoneShow(true);
-  //   setPhoneNumber(text);
-  // };
-
   const copyEmail = (text) => {
     navigator.clipboard.writeText(text);
-
     setShow(true);
   };
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Header as="h3">Popover right</Popover.Header>
-      <Popover.Body>test</Popover.Body>
-    </Popover>
+  const showPhone = (text) => {
+    setPhoneNumber(text);
+  };
+
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {phoneNumber}
+    </Tooltip>
   );
 
   const CrewCard = () =>
     crew.map((c, index) => {
-      console.log(c.image[0].filename);
       return (
         <Col md={4}>
-          <Card key={index} className="border-0" style={{ width: "18rem" }}>
+          <Card
+            key={index}
+            className="border-0 shadow-lg"
+            style={{ width: "18rem" }}
+          >
             <Card.Header>
               <Row className="text-center">
                 <Col md={12}>
@@ -63,21 +64,55 @@ export default function ViewCrew() {
               <Row className="text-center">
                 <Col md={12}>
                   <Card.Title>{c.name}</Card.Title>
+                  <Card.Subtitle>{c.position}</Card.Subtitle>
                 </Col>
               </Row>
+            </Card.Header>
+            <Card.Body>
               <Row className="text-center">
                 <Col md={12}>
-                  <Button
-                    onClick={() => copyEmail(c.email)}
-                    className="button-in-card"
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip}
                   >
-                    <i data-nav={c.email} className="fas fa-envelope"></i>
-                  </Button>
-                  <i className="p-1 fas fa-trash"></i>
+                    <Button
+                      onClick={() => copyEmail(c.email)}
+                      className="button-in-card"
+                      onMouseEnter={() => showPhone("Click to copy e-mail")}
+                    >
+                      <i data-nav={c.email} className="fas fa-envelope"></i>
+                    </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip}
+                  >
+                    <Button
+                      className="button-in-card"
+                      onMouseEnter={() => showPhone(c.phone)}
+                    >
+                      <i className="p-1 fas fa-phone"></i>
+                    </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip}
+                  >
+                    <Button
+                      className="button-in-card"
+                      onMouseEnter={() =>
+                        showPhone(`Delete crewmember from ${tailNumber}`)
+                      }
+                    >
+                      <i className="p-1 fas fa-trash"></i>
+                    </Button>
+                  </OverlayTrigger>
                 </Col>
               </Row>
-              <Card.Body> </Card.Body>
-            </Card.Header>
+            </Card.Body>
           </Card>
         </Col>
       );
@@ -91,6 +126,7 @@ export default function ViewCrew() {
         if (isLoaded) {
           const data = await response.json();
           setCrew(data.tail_crew);
+          setTailNumber(data.tail_number);
         }
 
         setIsLoaded(false);
@@ -123,11 +159,6 @@ export default function ViewCrew() {
             <CrewCard />
           </Row>
         </Container>
-        <OverlayTrigger trigger="click" placement="right" overlay={popover}>
-          <Button className="button-in-card">
-            <i className="p-1 fas fa-phone"></i>
-          </Button>
-        </OverlayTrigger>
       </Container>
     );
   }

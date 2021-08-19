@@ -58,7 +58,7 @@ export default function EditCrew() {
         console.log(res);
         console.log("Crew member successfully updated");
       })
-      .then(() => history.push(`/`))
+      .then(() => history.push(`/view/${id}/crew`))
       .catch((error) => {
         console.log(error);
       });
@@ -78,6 +78,7 @@ export default function EditCrew() {
       position: e.target.value,
     }));
   };
+
   const categories = [
     {
       item: "name",
