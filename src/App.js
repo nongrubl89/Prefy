@@ -11,6 +11,7 @@ import ViewCrew from "./components/TailDisplay/ViewCrew";
 import EditCatering from "./components/TailDisplay/EditCatering";
 import EditPassengers from "./components/TailDisplay/EditPassengers";
 import EditCrew from "./components/TailDisplay/EditCrew";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -26,7 +27,8 @@ function App() {
         <Route path="/edit/:id" component={TailEdit} />
         <Route path="/add" component={Add} />
         <Route path="/view/:id" component={TailHome} />
-        <Route path="/" component={CardContainer} />
+        <Route exact path="/" component={Home} />
+        <Route path="/home" component={CardContainer} />
       </Switch>
     </Router>
   );

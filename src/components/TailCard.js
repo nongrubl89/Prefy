@@ -7,7 +7,7 @@ export default function TailCard(props) {
       <Container>
         <Row className="d-flex justify-content-center">
           <Col md={6} xs={12}>
-            <Card className="mx-auto mb-3 mt-3 shadow-lg" key={props.keys}>
+            <Card className="mx-auto mb-3 mt-3 shadow-sm" key={props.keys}>
               <Card.Header>{props.tailNumber}</Card.Header>
               <Card.Body>
                 <Card.Subtitle className="mb-2 text-muted">

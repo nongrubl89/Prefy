@@ -5,15 +5,16 @@
 
 a {
   text-decoration: none;
-  color: white;
+  color: black;
 }
 
 .navbar {
-  background-color: #03045e;
+  background-color: #eef7fc;
 }
 .navbar-brand {
   font-family: "Pacifico";
   font-size: 1.5em !important;
+  color: black !important;
 }
 
 button {
@@ -40,12 +41,9 @@ button:hover {
 #add-pref-container,
 #card-container {
   background: linear-gradient(
-    45deg,
-    hsla(192, 95%, 50%, 1) 0%,
-    hsla(200, 93%, 49%, 1) 25%,
-    hsla(207, 92%, 48%, 1) 71%,
-    hsla(216, 90%, 48%, 1) 100%,
-    hsla(225, 89%, 47%, 1) 100%
+    180deg,
+    hsla(201, 70%, 96%, 1) 0%,
+    rgb(160, 203, 241) 100%
   );
   height: 100vh;
 }
@@ -67,4 +65,19 @@ button:hover {
   border: none !important;
   color: black !important;
   padding: 1px !important;
+}
+
+.navy {
+  width: 110%;
+
+  height: 580px;
+  background: linear-gradient(
+    180deg,
+    hsla(201, 70%, 96%, 1) 0%,
+    rgb(160, 203, 241) 100%
+  );
+  -webkit-clip-path: polygon(100% 0, 0 0, 0 100%);
+  clip-path: polygon(100% 0, 0 0, 0 100%);
+  z-index: -1 !important;
+  position: absolute;
 }
