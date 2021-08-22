@@ -13,10 +13,8 @@ export default function TailCard(props) {
                 <Card.Subtitle className="mb-2 text-muted">
                   {props.icao}
                 </Card.Subtitle>
-                <Button className="mr-2" variant="primary">
-                  <a className="text-white" href={`/view/${props.id}`}>
-                    View
-                  </a>
+                <Button className="mr-2" variant="outline-dark">
+                  <a href={`/view/${props.id}`}>View</a>
                 </Button>
                 {/* <Button variant="primary">
                   <a className="text-white" href={`/edit/${props.id}`}>
@@ -26,7 +24,7 @@ export default function TailCard(props) {
                 <Button
                   className="ml-2"
                   onClick={() => props.deletePref(props.id)}
-                  variant="primary"
+                  variant="outline-dark"
                 >
                   Delete
                 </Button>

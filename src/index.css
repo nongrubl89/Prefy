@@ -4,27 +4,26 @@
 }
 
 a {
-  text-decoration: none;
-  color: black;
+  text-decoration: none !important;
+  color: black !important;
+}
+
+a:hover {
+  text-decoration: none !important;
+  color: black !important;
 }
 
 .navbar {
   background-color: #eef7fc;
 }
-.navbar-brand {
+.navbar .navbar-brand {
   font-family: "Pacifico";
-  font-size: 1.5em !important;
-  color: black !important;
+  font-size: 1.5em;
+  color: black;
 }
 
-button {
-  background-color: #09a6f3 !important;
-  border: #09a6f3 1px solid !important;
-}
-
-button:hover {
-  background-color: #0a85ed !important;
-  border: #0a85ed 1px solid !important;
+.card .card-body button {
+  background-color: transparent;
 }
 
 #jumbotron {
@@ -59,15 +58,7 @@ button:hover {
   width: 30% !important;
 }
 
-.button-in-card,
-.button-in-card:hover {
-  background: none !important;
-  border: none !important;
-  color: black !important;
-  padding: 1px !important;
-}
-
-.navy {
+.row .navy {
   width: 110%;
 
   height: 580px;
@@ -78,6 +69,33 @@ button:hover {
   );
   -webkit-clip-path: polygon(100% 0, 0 0, 0 100%);
   clip-path: polygon(100% 0, 0 0, 0 100%);
-  z-index: -1 !important;
+  z-index: -1;
   position: absolute;
+}
+
+.row .cloud {
+  z-index: 3;
+  position: absolute;
+}
+
+.row .card-in-jumbotron {
+  z-index: 1000;
+  position: relative;
+}
+
+@media only screen and (max-width: 600px) {
+  .row .navy {
+    width: 110%;
+
+    height: 500px;
+    background: linear-gradient(
+      180deg,
+      hsla(201, 70%, 96%, 1) 0%,
+      rgb(160, 203, 241) 100%
+    );
+    -webkit-clip-path: polygon(150% 0, 0 0, 0 100%);
+    clip-path: polygon(150% 0, 0 0, 0 100%);
+    z-index: -1;
+    position: absolute;
+  }
 }
