@@ -10,6 +10,8 @@ import {
   Tooltip,
 } from "react-bootstrap";
 import ToastMessage from "../ToastMessage";
+import axios from "axios";
+import AlertCard from "../AlertCard";
 
 export default function ViewCrew() {
   const [crew, setCrew] = useState([]);
@@ -41,6 +43,19 @@ export default function ViewCrew() {
       {phoneNumber}
     </Tooltip>
   );
+
+  const deleteCrewMember = async (cId) => {
+    console.log(cId);
+    console.log(id);
+    await axios({
+      method: "delete",
+      url: `http://localhost:4000/tails/view/${id}/crew`,
+      data: { crewId: cId },
+    })
+      .then((res) => console.log(res.data))
+      .then(setCrew(crew.filter((c) => c._id !== cId)))
+      .catch((err) => console.log(err));
+  };
 
   const CrewCard = () =>
     crew.map((c, index) => {
@@ -103,11 +118,26 @@ export default function ViewCrew() {
                   >
                     <Button
                       className="button-in-card"
+                      onClick={() => deleteCrewMember(c._id)}
                       onMouseEnter={() =>
-                        showPhone(`Delete crewmember from ${tailNumber}`)
+                        showPhone(`Delete ${c.name} from ${tailNumber}`)
                       }
                     >
                       <i className="p-1 fas fa-trash"></i>
+                    </Button>
+                  </OverlayTrigger>
+                  <OverlayTrigger
+                    placement="bottom"
+                    delay={{ show: 250, hide: 400 }}
+                    overlay={renderTooltip}
+                  >
+                    <Button
+                      className="button-in-card"
+                      onMouseEnter={() =>
+                        showPhone(`Show the rest of ${c.name}'s preferences`)
+                      }
+                    >
+                      <i className="fas fa-info-circle"></i>
                     </Button>
                   </OverlayTrigger>
                 </Col>
@@ -143,6 +173,19 @@ export default function ViewCrew() {
     return <div>Error</div>;
   } else if (!isLoaded && !error) {
     return <div>Loading...</div>;
+  } else if (crew.length === 0) {
+    return (
+      <Container fluid id="card-container">
+        <AlertCard
+          message={
+            <p className="text-center pt-3">
+              Nothing to see here! Start by{" "}
+              <a href="/add">adding a crewmember.</a>
+            </p>
+          }
+        />
+      </Container>
+    );
   } else {
     return (
       <Container fluid id="card-container">

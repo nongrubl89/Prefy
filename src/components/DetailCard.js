@@ -22,11 +22,15 @@ export default function DetailCard(props) {
           </Card.Title>
           <Card.Subtitle className="m-2">{props.text}</Card.Subtitle>
           <Row className="m-2">
-            <Link to={props.linkToView} onClick={props.cardSetter}>
+            <Link
+              className="m-1"
+              to={props.linkToView}
+              onClick={props.cardSetter}
+            >
               View
               <i className="ml-1 mt-auto fas fa-arrow-right"></i>
             </Link>
-            <Link to={props.linkToEdit}>
+            <Link className="m-1" to={props.linkToEdit}>
               Edit
               <i className="ml-1 mt-auto fas fa-arrow-right"></i>
             </Link>

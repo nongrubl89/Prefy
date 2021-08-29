@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Jumbotron, Container, Row } from "react-bootstrap";
+import { Jumbotron, Container, Row, Col } from "react-bootstrap";
 import DetailCard from "../DetailCard";
 import { useRouteMatch } from "react-router-dom";
 
@@ -40,9 +40,11 @@ export default function TailHome(props) {
     return (
       <>
         <Jumbotron id="jumbotron">
-          <h2>{tail.tail_number}</h2>
-          <h6>{tail.tail_owner}</h6>
-          <h6>{tail.tail_icao}</h6>
+          <Container>
+            <h2>{tail.tail_number}</h2>
+            <h6>{tail.tail_owner}</h6>
+            <h6>{tail.tail_icao}</h6>
+          </Container>
         </Jumbotron>
         <Container>
           <Row className="d-block d-flex justify-content-center">

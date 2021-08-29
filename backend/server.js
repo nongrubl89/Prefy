@@ -32,42 +32,6 @@ MongoClient.connect(connectionString, (err, client) => {
   console.log("Connected to Database");
 });
 
-// const storage = multer.memoryStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, "./public/uploads");
-//   },
-//   filename: function (req, file, cb) {
-//     cb(null, Date.now() + "-" + file.originalname);
-//   },
-// });
-
-// const storage = multer.memoryStorage();
-
-// // const upload = multer({ storage: storage }).single("image");
-
-// const upload = multer({
-//   storage: storage,
-//   limits: {
-//     fileSize: 3024 * 3024 * 5,
-//   },
-// });
-
-// const upload = multer({
-//   //multer configuration
-//   //dest: "avatars",       //so that buffer is available in route handler
-//   limits: {
-//     fileSize: 2000000,
-//   },
-//   fileFilter(req, file, cb) {
-//     // object method shorthand syntax
-//     if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-//       //.match for using regex b/w (//)
-//       return cb(new Error("Please upload a IMAGE"));
-//     }
-//     cb(undefined, true);
-//   },
-// });
-
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./public/uploads");
@@ -154,6 +118,23 @@ prefyRoutes.route("/:id").delete((req, res) => {
   console.log(req.params);
   Tail.findOneAndDelete(req.params.delete)
     .then((tail) => res.json(tail))
+    .catch((err) => res.status(400).json(err));
+});
+
+prefyRoutes.route("/view/:id/crew").delete(async (req, res) => {
+  const crewID = req.body.crewId;
+  console.log(crewID);
+  Tail.updateOne(
+    {},
+    {
+      $pull: {
+        tail_crew: {
+          _id: crewID,
+        },
+      },
+    }
+  )
+    .then((tail) => res.json(tail, "deleted"))
     .catch((err) => res.status(400).json(err));
 });
 

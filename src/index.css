@@ -13,6 +13,11 @@ a:hover {
   color: black !important;
 }
 
+.card-body .row .btn {
+  border: 0px;
+  color: black;
+}
+
 .navbar {
   background-color: #eef7fc;
 }
@@ -28,17 +33,15 @@ a:hover {
 
 #jumbotron {
   background: linear-gradient(
-    45deg,
-    hsla(192, 95%, 50%, 1) 0%,
-    hsla(200, 93%, 49%, 1) 25%,
-    hsla(207, 92%, 48%, 1) 71%,
-    hsla(216, 75%, 48%, 1) 100%,
-    hsla(225, 89%, 47%, 1) 100%
+    180deg,
+    hsla(201, 70%, 96%, 1) 0%,
+    rgb(160, 203, 241) 100%
   );
 }
 
 #add-pref-container,
-#card-container {
+#card-container,
+.container-fluid {
   background: linear-gradient(
     180deg,
     hsla(201, 70%, 96%, 1) 0%,
@@ -48,7 +51,7 @@ a:hover {
 }
 
 #detail-card {
-  background-color: rgb(226, 235, 247);
+  background-color: rgb(192, 216, 236);
   border-radius: 12px;
 }
 
@@ -57,7 +60,9 @@ a:hover {
 .card-img-top {
   width: 30% !important;
 }
-
+.btn:hover {
+  color: black !important;
+}
 .row .navy {
   width: 110%;
 

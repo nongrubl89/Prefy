@@ -107,15 +107,15 @@ export default function EditCrew() {
   ];
 
   return (
-    <Container fluid className="bg-light min-vh-100">
+    <Container fluid className="min-vh-100">
       <Row className="d-flex justify-content-center p-3">
         <Col md={6}>
           <Accordion>
-            <Card className="shadow-lg">
+            <Card className="shadow-sm">
               <Accordion.Toggle
                 onClick={() => setOpen(!open)}
-                id="jumbotron"
                 as={Card.Header}
+                className="bg-light"
                 // eventKey="0"
               >
                 Add Crewmember
