@@ -1,7 +1,6 @@
-import { useState } from "react";
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { Jumbotron, Container, Row, Col } from "react-bootstrap";
+import { Jumbotron, Container, Row } from "react-bootstrap";
 import DetailCard from "../DetailCard";
 import { useRouteMatch } from "react-router-dom";
 import { TailContext } from "../TailContext";
