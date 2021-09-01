@@ -1,12 +1,16 @@
-import { React, useState, useEffect } from "react";
-import { Container } from "react-bootstrap";
+import { React, useState, useEffect, useContext } from "react";
+import { Container, Button } from "react-bootstrap";
 import TailCard from "./TailCard";
 import AlertCard from "./AlertCard";
+import { TailContext } from "./TailContext";
+import { useHistory } from "react-router-dom";
 
 export default function CardContainer() {
   const [tails, setTails] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const [error, setError] = useState(true);
+  const { tailValue, setTailValue } = useContext(TailContext);
+  const history = useHistory();
 
   const deletePref = (pId) => {
     return fetch(`http://localhost:4000/tails/${pId}`, {
@@ -15,6 +19,17 @@ export default function CardContainer() {
       .then((res) => res.json())
       .then((res) => console.log(res))
       .then(setTails(tails.filter((tail) => tail._id !== pId)));
+  };
+
+  const setTailContext = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:4000/tails/view/${id}`);
+      const data = await response.json();
+      setTailValue(data);
+      history.push(`/view/${id}`);
+    } catch {
+      setError(false);
+    }
   };
 
   useEffect(() => {
@@ -72,6 +87,7 @@ export default function CardContainer() {
       <Container fluid id="card-container">
         {tails.map((tail) => (
           <TailCard
+            setTailContext={setTailContext}
             key={tail._id}
             id={tail._id}
             tailNumber={tail.tail_number}

@@ -19,7 +19,7 @@ export default function ViewCrew() {
   const [error, setError] = useState(true);
   const [show, setShow] = useState(false);
   const [tailNumber, setTailNumber] = useState(null);
-  // const [phoneShow, setPhoneShow] = useState(false);
+  const [modalInfo, setModalInfo] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
   // const target = useRef(null);
 
@@ -43,6 +43,8 @@ export default function ViewCrew() {
       {phoneNumber}
     </Tooltip>
   );
+
+  const showModal = (id) => {};
 
   const deleteCrewMember = async (cId) => {
     console.log(cId);
@@ -133,6 +135,7 @@ export default function ViewCrew() {
                   >
                     <Button
                       className="button-in-card"
+                      onClick={() => showModal(c._id)}
                       onMouseEnter={() =>
                         showPhone(`Show the rest of ${c.name}'s preferences`)
                       }

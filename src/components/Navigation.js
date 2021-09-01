@@ -1,7 +1,17 @@
-import React from "react";
-import { Navbar } from "react-bootstrap";
+import React, { useState } from "react";
+import { Navbar, Nav, OverlayTrigger, Button, Tooltip } from "react-bootstrap";
 
 export default function Navigation() {
+  const [add, setAdd] = useState(null);
+  const renderTooltip = (props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {add}
+    </Tooltip>
+  );
+
+  const showAdd = (text) => {
+    setAdd(text);
+  };
   return (
     <>
       <Navbar className="pl-3" sticky="top" expand="lg">
@@ -9,7 +19,24 @@ export default function Navigation() {
           Prefy
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="mr-auto">
+            <Nav.Link href="/add">
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+              >
+                <Button
+                  className="button-in-card"
+                  onMouseEnter={() => showAdd("Add")}
+                >
+                  <i class="fas fa-plus"></i>
+                </Button>
+              </OverlayTrigger>
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
     </>
   );
