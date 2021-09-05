@@ -31,6 +31,13 @@ a:hover {
   background-color: transparent;
 }
 
+.navbar button,
+.navbar button:hover {
+  background-color: transparent;
+  border: 0;
+  color: black;
+}
+
 #jumbotron {
   background: linear-gradient(
     180deg,

@@ -12,26 +12,27 @@ import {
 import ToastMessage from "../ToastMessage";
 import axios from "axios";
 import AlertCard from "../AlertCard";
+import DetailsModal from "./DetailsModal";
 
 export default function ViewCrew() {
   const [crew, setCrew] = useState([]);
   const [isLoaded, setIsLoaded] = useState(true);
   const [error, setError] = useState(true);
-  const [show, setShow] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const [tailNumber, setTailNumber] = useState(null);
   const [modalInfo, setModalInfo] = useState(null);
   const [phoneNumber, setPhoneNumber] = useState("");
-  // const target = useRef(null);
+  const [showModal, setShowModal] = useState(false);
 
   let { id } = useParams();
 
   const hideShow = () => {
-    setShow(false);
+    setShowToast(false);
   };
 
   const copyEmail = (text) => {
     navigator.clipboard.writeText(text);
-    setShow(true);
+    setShowToast(true);
   };
 
   const showPhone = (text) => {
@@ -44,11 +45,14 @@ export default function ViewCrew() {
     </Tooltip>
   );
 
-  const showModal = (id) => {};
+  const displayModal = (c) => {
+    setModalInfo(c);
+    setShowModal(true);
+  };
+
+  const onHideModal = () => setShowModal(false);
 
   const deleteCrewMember = async (cId) => {
-    console.log(cId);
-    console.log(id);
     await axios({
       method: "delete",
       url: `http://localhost:4000/tails/view/${id}/crew`,
@@ -65,7 +69,7 @@ export default function ViewCrew() {
         <Col md={4}>
           <Card
             key={index}
-            className="border-0 shadow-lg"
+            className="border-0 shadow-sm"
             style={{ width: "18rem" }}
           >
             <Card.Header>
@@ -135,7 +139,7 @@ export default function ViewCrew() {
                   >
                     <Button
                       className="button-in-card"
-                      onClick={() => showModal(c._id)}
+                      onClick={() => displayModal(c)}
                       onMouseEnter={() =>
                         showPhone(`Show the rest of ${c.name}'s preferences`)
                       }
@@ -195,7 +199,7 @@ export default function ViewCrew() {
         <Container className="p-3">
           <Row className="d-flex justify-content-center p-3">
             <ToastMessage
-              show={show}
+              show={showToast}
               message={"Email Address Copied to Clipboard"}
               hideShow={hideShow}
               position={"top-end"}
@@ -204,6 +208,15 @@ export default function ViewCrew() {
           <Row>
             <CrewCard />
           </Row>
+          {modalInfo ? (
+            <DetailsModal
+              show={showModal}
+              modalInfo={modalInfo}
+              onHideModal={onHideModal}
+            />
+          ) : (
+            <div></div>
+          )}
         </Container>
       </Container>
     );

@@ -20,7 +20,7 @@ export default function Navigation() {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
+          <Nav className="ml-auto">
             <Nav.Link href="/add">
               <OverlayTrigger
                 placement="bottom"
@@ -32,6 +32,18 @@ export default function Navigation() {
                   onMouseEnter={() => showAdd("Add")}
                 >
                   <i class="fas fa-plus"></i>
+                </Button>
+              </OverlayTrigger>
+              <OverlayTrigger
+                placement="bottom"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip}
+              >
+                <Button
+                  className="button-in-card"
+                  onMouseEnter={() => showAdd("Login")}
+                >
+                  <i class="far fa-user"></i>
                 </Button>
               </OverlayTrigger>
             </Nav.Link>
