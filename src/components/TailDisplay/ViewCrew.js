@@ -66,7 +66,7 @@ export default function ViewCrew() {
   const CrewCard = () =>
     crew.map((c, index) => {
       return (
-        <Col md={4}>
+        <Col md={4} key={index}>
           <Card
             key={index}
             className="border-0 shadow-sm"

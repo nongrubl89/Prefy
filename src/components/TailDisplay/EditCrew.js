@@ -159,7 +159,6 @@ export default function EditCrew() {
                   </Form.Control>
                   <Form.Group>
                     <Form.File
-                      id="exampleFormControlFile1"
                       type="file"
                       label="Profile Picture"
                       accept=".jpg,.png"

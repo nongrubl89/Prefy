@@ -37,6 +37,7 @@ let Tail = new Schema(
         preferences: String,
       },
     ],
+    tail_trips: [{}],
   },
   { strict: false }
 );

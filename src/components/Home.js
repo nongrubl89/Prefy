@@ -29,7 +29,7 @@ export default function Home() {
             >
               <Card.Body>
                 <Card.Text style={{ fontSize: "1.5em" }}>
-                  Prefy allows aviation professionals and aircraft owners to
+                  With Prefy, aviation professionals and aircraft owners can
                   track and share information about passengers, trips, and teams
                   all in one place.
                 </Card.Text>
@@ -45,17 +45,6 @@ export default function Home() {
           <div className="navy"></div>
         </Row>
       </div>
-      {/* <Row className="mt-3">
-        <Col md={9}></Col>
-        <Col md={3}>
-          <Button className="m-2" variant="outline-dark">
-            Log In
-          </Button>
-          <Button className="m-2" variant="outline-dark">
-            Sign Up
-          </Button>
-        </Col>
-      </Row> */}
     </>
   );
 }

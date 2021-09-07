@@ -10,7 +10,7 @@ export default function DetailCard(props) {
         onMouseOver={() => setHover(true)}
         onMouseOut={() => setHover(false)}
         id="detail-card"
-        style={{ width: "18rem" }}
+        style={{ width: "14rem" }}
         className={hover ? "m-2 border-0 p-1 shadow-sm" : "m-2 border-0 p-1"}
       >
         <Card.Body>

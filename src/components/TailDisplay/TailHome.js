@@ -44,6 +44,13 @@ export default function TailHome() {
             linkToView={`${url}/crew`}
             linkToEdit={`${url}/crew-edit`}
           />
+          <DetailCard
+            image={<i className="far fa-calendar-alt fa-2x"></i>}
+            tailDetail="Calendar"
+            text="Add and view upcoming trips"
+            linkToView={`${url}/calendar`}
+            linkToEdit={`${url}/calendar-edit`}
+          />
         </Row>
       </Container>
     </>
