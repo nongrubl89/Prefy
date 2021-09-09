@@ -31,7 +31,7 @@ export default function Navigation() {
                   className="button-in-card"
                   onMouseEnter={() => showAdd("Add")}
                 >
-                  <i class="fas fa-plus"></i>
+                  <i className="fas fa-plus"></i>
                 </Button>
               </OverlayTrigger>
               <OverlayTrigger
@@ -43,7 +43,7 @@ export default function Navigation() {
                   className="button-in-card"
                   onMouseEnter={() => showAdd("Login")}
                 >
-                  <i class="far fa-user"></i>
+                  <i className="far fa-user"></i>
                 </Button>
               </OverlayTrigger>
             </Nav.Link>
