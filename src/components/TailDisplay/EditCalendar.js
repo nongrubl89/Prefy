@@ -24,23 +24,21 @@ export default function EditCalendar() {
   const [roundtrip, setRoundtrip] = useState({
     departureDate1: "",
     departureTime1: "",
-    departureAirport1: "",
-    arrivalAirport1: "",
+    departureAirport: "",
+    arrivalAirport: "",
     departureDate2: "",
     departureTime2: "",
-    departureAirport2: "",
-    arrivalAirport2: "",
     passengers: [],
   });
 
   const airports = [
-    { name: "KSFO - San Francisco, Ca", value: "KSFO" },
-    { name: "KMDW - Chicago, Il", value: "KMDW" },
-    { name: "KTEB - New York, Ny", value: "KTEB" },
-    { name: "KVNY - Van Nuys, Ca", value: "KVNY" },
-    { name: "KSJC - San Jose, Ca", value: "KSJC" },
-    { name: "KOPF - Miami, Fl", value: "KOPF" },
-    { name: "KEGE - Eagle County, Co", value: "KEGE" },
+    { name: "KSFO - San Francisco, CA", value: "KSFO" },
+    { name: "KMDW - Chicago, IL", value: "KMDW" },
+    { name: "KTEB - New York, NY", value: "KTEB" },
+    { name: "KVNY - Van Nuys, CA", value: "KVNY" },
+    { name: "KSJC - San Jose, CA", value: "KSJC" },
+    { name: "KOPF - Miami, FL", value: "KOPF" },
+    { name: "KEGE - Eagle County, CO", value: "KEGE" },
   ];
   const handleTripType = (e) => {
     if (e.target.id === "oneway") {
@@ -51,9 +49,29 @@ export default function EditCalendar() {
   };
 
   useEffect(() => {
-    console.log(tripType);
+    console.log(oneWayTrip);
   });
 
+  const handleOneWayCalendar = (selected, stateValue, objectKey) => {
+    console.log("select", stateValue);
+    console.log("select", objectKey);
+    setOneWayTrip((prevState) => ({
+      ...prevState,
+      [objectKey]: selected,
+    }));
+  };
+
+  const handleOneWayDetails = (e) => {
+    const { id, value } = e.target;
+    setOneWayTrip((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
+  const handleTwoWayDetails = () => {
+    console.log("hi");
+  };
   const OneWayForm = () => {
     return (
       <Form.Group controlId="dob">
@@ -62,8 +80,11 @@ export default function EditCalendar() {
             <Form.Label>Select Departure Date</Form.Label>
             <Form.Control
               type="date"
+              id="departureDate"
               name="departureOneWay"
               placeholder="Departure"
+              onChange={handleOneWayDetails}
+              value={oneWayTrip.departureDate}
             />
           </Col>
 
@@ -73,6 +94,9 @@ export default function EditCalendar() {
               type="time"
               name="departureOneWay"
               placeholder="Departure"
+              id="departureTime"
+              onChange={handleOneWayDetails}
+              value={oneWayTrip.departureTime}
             />
           </Col>
         </Row>
@@ -82,10 +106,12 @@ export default function EditCalendar() {
             <Typeahead
               id="departureAirport"
               labelKey="name"
-              onChange={setAirport}
+              onChange={(selected, stateValue, objectKey) =>
+                handleOneWayCalendar(selected, "oneWayTrip", "departureAirport")
+              }
               options={airports}
               placeholder="Choose airport"
-              selected={airport}
+              selected={oneWayTrip.departureAirport}
             />
           </Col>
           <Col md={6} xs={12}>
@@ -93,10 +119,12 @@ export default function EditCalendar() {
             <Typeahead
               id="arrivalAirport"
               labelKey="name"
-              onChange={setAirport}
+              onChange={(selected, stateValue, objectKey) =>
+                handleOneWayCalendar(selected, "oneWayTrip", "arrivalAirport")
+              }
               options={airports}
               placeholder="Choose airport"
-              selected={airport}
+              selected={oneWayTrip.arrivalAirport}
             />
           </Col>{" "}
         </Row>
@@ -119,6 +147,8 @@ export default function EditCalendar() {
               type="date"
               name="departureOneWay"
               placeholder="Departure"
+              onChange={handleTwoWayDetails}
+              value={roundtrip.departureDate1}
             />
           </Col>
           <Col md={6} xs={12}>
@@ -127,6 +157,8 @@ export default function EditCalendar() {
               type="time"
               name="departureOneWay"
               placeholder="Departure"
+              onChange={handleTwoWayDetails}
+              value={roundtrip.departureTime1}
             />
           </Col>
         </Row>
@@ -136,10 +168,10 @@ export default function EditCalendar() {
             <Typeahead
               id="departureAirport1"
               labelKey="name"
-              onChange={setAirport}
+              onChange={() => setAirport()}
               options={airports}
               placeholder="Choose airport"
-              selected={airport}
+              selected={roundtrip.departureAirport1}
             />
           </Col>
           <Col md={6} xs={12}>
@@ -164,7 +196,7 @@ export default function EditCalendar() {
             />
           </Col>
           <Col md={6} xs={12}>
-            <Form.Label>Select Departure Time</Form.Label>
+            <Form.Label>Select Return Departure Time</Form.Label>
             <Form.Control
               type="time"
               name="departureOneWay"
@@ -172,30 +204,7 @@ export default function EditCalendar() {
             />
           </Col>
         </Row>
-        <Row className="mt-2">
-          <Col md={6} xs={12}>
-            <Form.Label>Departure Airport</Form.Label>
-            <Typeahead
-              id="departureAirport2"
-              labelKey="name"
-              onChange={setAirport}
-              options={airports}
-              placeholder="Choose airport"
-              selected={airport}
-            />
-          </Col>
-          <Col md={6} xs={12}>
-            <Form.Label>Arrival Airport</Form.Label>
-            <Typeahead
-              id="arrivalAirport2"
-              labelKey="name"
-              onChange={setAirport}
-              options={airports}
-              placeholder="Choose airport"
-              selected={airport}
-            />
-          </Col>
-        </Row>
+
         <Row className="mt-2">
           <Col md={6} xs={12} className="d-flex align-items-end mb-1">
             <Button id="create-trip">Create Trip</Button>
