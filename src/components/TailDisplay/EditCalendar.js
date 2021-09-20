@@ -13,7 +13,6 @@ import { Typeahead } from "react-bootstrap-typeahead";
 
 export default function EditCalendar() {
   const [tripType, setTripType] = useState(true);
-  const [airport, setAirport] = useState([]);
   const [oneWayTrip, setOneWayTrip] = useState({
     departureDate: "",
     departureTime: "",
@@ -49,7 +48,7 @@ export default function EditCalendar() {
   };
 
   useEffect(() => {
-    console.log(oneWayTrip);
+    console.log(roundtrip);
   });
 
   const handleOneWayCalendar = (selected, stateValue, objectKey) => {
@@ -69,8 +68,22 @@ export default function EditCalendar() {
     }));
   };
 
-  const handleTwoWayDetails = () => {
-    console.log("hi");
+  const handleTwoWayDetails = (e) => {
+    const { id, value } = e.target;
+    setRoundtrip((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+  };
+
+  const handleRoundtripCalendar = (selected, stateValue, objectKey) => {
+    console.log("select", stateValue);
+    console.log("select", objectKey);
+    console.log(selected);
+    setRoundtrip((prevState) => ({
+      ...prevState,
+      [objectKey]: selected,
+    }));
   };
   const OneWayForm = () => {
     return (
@@ -145,6 +158,7 @@ export default function EditCalendar() {
             <Form.Label>Select Departure Date</Form.Label>
             <Form.Control
               type="date"
+              id="departureDate1"
               name="departureOneWay"
               placeholder="Departure"
               onChange={handleTwoWayDetails}
@@ -154,6 +168,7 @@ export default function EditCalendar() {
           <Col md={6} xs={12}>
             <Form.Label>Select Departure Time</Form.Label>
             <Form.Control
+              id="departureTime1"
               type="time"
               name="departureOneWay"
               placeholder="Departure"
@@ -168,10 +183,16 @@ export default function EditCalendar() {
             <Typeahead
               id="departureAirport1"
               labelKey="name"
-              onChange={() => setAirport()}
+              onChange={(selected, stateValue, objectKey) =>
+                handleRoundtripCalendar(
+                  selected,
+                  "roundtrip",
+                  "departureAirport"
+                )
+              }
               options={airports}
               placeholder="Choose airport"
-              selected={roundtrip.departureAirport1}
+              selected={roundtrip.departureAirport}
             />
           </Col>
           <Col md={6} xs={12}>
@@ -179,10 +200,12 @@ export default function EditCalendar() {
             <Typeahead
               id="arrivalAirport1"
               labelKey="name"
-              onChange={setAirport}
+              onChange={(selected, stateValue, objectKey) =>
+                handleRoundtripCalendar(selected, "roundtrip", "arrivalAirport")
+              }
               options={airports}
               placeholder="Choose airport"
-              selected={airport}
+              selected={roundtrip.arrivalAirport}
             />
           </Col>
         </Row>
@@ -191,15 +214,21 @@ export default function EditCalendar() {
             <Form.Label>Select Return Date</Form.Label>
             <Form.Control
               type="date"
+              id="departureDate2"
+              onChange={handleTwoWayDetails}
               name="departureOneWay"
               placeholder="Departure"
+              value={roundtrip.departureDate2}
             />
           </Col>
           <Col md={6} xs={12}>
             <Form.Label>Select Return Departure Time</Form.Label>
             <Form.Control
               type="time"
+              onChange={handleTwoWayDetails}
+              id="departureTime2"
               name="departureOneWay"
+              value={roundtrip.departureTime2}
               placeholder="Departure"
             />
           </Col>
@@ -240,7 +269,7 @@ export default function EditCalendar() {
                     </Pagination.Item>
                     <Pagination.Item
                       id="oneway"
-                      value="oneway"
+                      value={roundtrip.departureTime2}
                       onClick={handleTripType}
                       className={tripType === false ? "active" : ""}
                     >
