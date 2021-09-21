@@ -10,6 +10,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Pagination from "react-bootstrap/Pagination";
 import { Typeahead } from "react-bootstrap-typeahead";
+import OneWayForm from "./OneWayForm";
+import RoundtripForm from "./RoundtripForm";
 
 export default function EditCalendar() {
   const [tripType, setTripType] = useState(true);
@@ -85,163 +87,6 @@ export default function EditCalendar() {
       [objectKey]: selected,
     }));
   };
-  const OneWayForm = () => {
-    return (
-      <Form.Group controlId="dob">
-        <Row>
-          <Col md={6}>
-            <Form.Label>Select Departure Date</Form.Label>
-            <Form.Control
-              type="date"
-              id="departureDate"
-              name="departureOneWay"
-              placeholder="Departure"
-              onChange={handleOneWayDetails}
-              value={oneWayTrip.departureDate}
-            />
-          </Col>
-
-          <Col md={6} xs={12}>
-            <Form.Label>Select Departure Time</Form.Label>
-            <Form.Control
-              type="time"
-              name="departureOneWay"
-              placeholder="Departure"
-              id="departureTime"
-              onChange={handleOneWayDetails}
-              value={oneWayTrip.departureTime}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-2">
-          <Col md={6} xs={12}>
-            <Form.Label>Departure Airport</Form.Label>
-            <Typeahead
-              id="departureAirport"
-              labelKey="name"
-              onChange={(selected, stateValue, objectKey) =>
-                handleOneWayCalendar(selected, "oneWayTrip", "departureAirport")
-              }
-              options={airports}
-              placeholder="Choose airport"
-              selected={oneWayTrip.departureAirport}
-            />
-          </Col>
-          <Col md={6} xs={12}>
-            <Form.Label>Arrival Airport</Form.Label>
-            <Typeahead
-              id="arrivalAirport"
-              labelKey="name"
-              onChange={(selected, stateValue, objectKey) =>
-                handleOneWayCalendar(selected, "oneWayTrip", "arrivalAirport")
-              }
-              options={airports}
-              placeholder="Choose airport"
-              selected={oneWayTrip.arrivalAirport}
-            />
-          </Col>{" "}
-        </Row>
-        <Row className="mt-2">
-          <Col md={6} xs={12} lg={12} className="d-flex align-items-end mb-1">
-            <Button id="create-trip">Create Trip</Button>
-          </Col>
-        </Row>
-      </Form.Group>
-    );
-  };
-
-  const TwoWayForm = () => {
-    return (
-      <Form.Group controlId="dob">
-        <Row>
-          <Col md={6} lg={12}>
-            <Form.Label>Select Departure Date</Form.Label>
-            <Form.Control
-              type="date"
-              id="departureDate1"
-              name="departureOneWay"
-              placeholder="Departure"
-              onChange={handleTwoWayDetails}
-              value={roundtrip.departureDate1}
-            />
-          </Col>
-          <Col md={6} xs={12}>
-            <Form.Label>Select Departure Time</Form.Label>
-            <Form.Control
-              id="departureTime1"
-              type="time"
-              name="departureOneWay"
-              placeholder="Departure"
-              onChange={handleTwoWayDetails}
-              value={roundtrip.departureTime1}
-            />
-          </Col>
-        </Row>
-        <Row className="mt-2">
-          <Col md={6} xs={12}>
-            <Form.Label>Departure Airport</Form.Label>
-            <Typeahead
-              id="departureAirport1"
-              labelKey="name"
-              onChange={(selected, stateValue, objectKey) =>
-                handleRoundtripCalendar(
-                  selected,
-                  "roundtrip",
-                  "departureAirport"
-                )
-              }
-              options={airports}
-              placeholder="Choose airport"
-              selected={roundtrip.departureAirport}
-            />
-          </Col>
-          <Col md={6} xs={12}>
-            <Form.Label>Arrival Airport</Form.Label>
-            <Typeahead
-              id="arrivalAirport1"
-              labelKey="name"
-              onChange={(selected, stateValue, objectKey) =>
-                handleRoundtripCalendar(selected, "roundtrip", "arrivalAirport")
-              }
-              options={airports}
-              placeholder="Choose airport"
-              selected={roundtrip.arrivalAirport}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Form.Label>Select Return Date</Form.Label>
-            <Form.Control
-              type="date"
-              id="departureDate2"
-              onChange={handleTwoWayDetails}
-              name="departureOneWay"
-              placeholder="Departure"
-              value={roundtrip.departureDate2}
-            />
-          </Col>
-          <Col md={6} xs={12}>
-            <Form.Label>Select Return Departure Time</Form.Label>
-            <Form.Control
-              type="time"
-              onChange={handleTwoWayDetails}
-              id="departureTime2"
-              name="departureOneWay"
-              value={roundtrip.departureTime2}
-              placeholder="Departure"
-            />
-          </Col>
-        </Row>
-
-        <Row className="mt-2">
-          <Col md={6} xs={12} className="d-flex align-items-end mb-1">
-            <Button id="create-trip">Create Trip</Button>
-          </Col>
-        </Row>
-      </Form.Group>
-    );
-  };
 
   return (
     <Container fluid className="min-vh-100">
@@ -276,7 +121,21 @@ export default function EditCalendar() {
                       One Way
                     </Pagination.Item>
                   </Pagination>
-                  {tripType === true ? <TwoWayForm /> : <OneWayForm />}
+                  {tripType === true ? (
+                    <RoundtripForm
+                      roundtrip={roundtrip}
+                      airports={airports}
+                      handleRoundtripCalendar={handleRoundtripCalendar}
+                      handleTwoWayDetails={handleTwoWayDetails}
+                    />
+                  ) : (
+                    <OneWayForm
+                      oneWayTrip={oneWayTrip}
+                      airports={airports}
+                      handleOneWayCalendar={handleOneWayCalendar}
+                      handleOneWayDetails={handleOneWayDetails}
+                    />
+                  )}
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
