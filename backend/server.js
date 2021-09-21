@@ -82,6 +82,22 @@ prefyRoutes.get("/edit/:id", function (req, res) {
   });
 });
 
+prefyRoutes.put("/view/:id/calendar-edit", function (req, res, next) {
+  Tail.findByIdAndUpdate(
+    { _id: req.params.id },
+    { $addToSet: { tail_trips: req.body } },
+    (error, success) => {
+      if (error) {
+        // console.log(error);
+        return next(error);
+      } else {
+        res.json(success);
+        console.log("success");
+      }
+    }
+  );
+});
+
 prefyRoutes.put(
   "/view/:id/crew-edit",
   upload.single("image"),
