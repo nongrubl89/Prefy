@@ -114,7 +114,7 @@ export default function RoundtripForm(props) {
               }
               options={airports}
               placeholder="Choose airport"
-              selected={roundtrip.departureAirport}
+              defaultSelected={roundtrip.departureAirport}
             />
           </Col>
           <Col md={6} xs={12}>
@@ -128,7 +128,7 @@ export default function RoundtripForm(props) {
               }
               options={airports}
               placeholder="Choose airport"
-              selected={roundtrip.arrivalAirport}
+              defaultSelected={roundtrip.arrivalAirport}
             />
           </Col>
         </Row>
